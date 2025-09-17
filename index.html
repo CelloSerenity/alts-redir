@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AltSource Redirector</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffedbf;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        h1 {
+            margin-top: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        #links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .custom-button {
+            display: block;
+            width: 200px;
+            margin: 12px auto;
+            padding: 12px 0;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            line-height: 1.2;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .custom-button.sidestore {
+            background-color: #a405fa;
+        }
+        .custom-button.sidestore:hover,
+        .custom-button.sidestore:focus {
+            background-color: #8304c8;
+        }
+        .custom-button.altstore {
+            background-color: #018084;
+        }
+        .custom-button.altstore:hover,
+        .custom-button.altstore:focus {
+            background-color: #006f70;
+        }
+        .custom-button.feather {
+            background-color: #848ef9;
+        }
+        .custom-button.feather:hover,
+        .custom-button.feather:focus {
+            background-color: #6f79d3;
+        }
+        .custom-button.livecontainer {
+            background-color: #0784fc;
+        }
+        .custom-button.livecontainer:hover,
+        .custom-button.livecontainer:focus {
+            background-color: #056ed6;
+        }
+        .custom-button.neutral {
+            background-color: #6c757d;
+        }
+        .custom-button.neutral:hover,
+        .custom-button.neutral:focus {
+            background-color: #5a6268;
+        }
+        .centered-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            width: 100%;
+            max-width: 350px;
+            margin: 40px auto 0 auto;
+            color: #c0392b;
+            background: #fff7f7;
+            border: 1px solid #f0d6d6;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(200,60,60,0.07);
+            padding: 32px 18px 24px 18px;
+            font-size: 0.96em;
+        }
+        code {
+            background: #f0f0f0;
+            border-radius: 5px;
+            padding: 2px 6px;
+            font-size: 0.98em;
+        }
+        .url-form {
+            display: flex;
+            width: 100%;
+            max-width: 420px;
+            gap: 8px;
+            margin-top: 6px;
+            align-items: center;
+            justify-content: center;
+        }
+        .url-input {
+            flex: 1 1 auto;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .paste-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.15s;
+            font-size: 14px;
+        }
+        .paste-button:hover {
+            background-color: #218838;
+        }
+        .hint {
+            margin-top: 12px;
+            font-size: 0.94em;
+            color: #333;
+            text-align: center;
+        }
+        .error {
+            color: #b21c1c;
+            font-size: 0.92em;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AltSource Redirector</h1>
+    <div id="links-container">
+        <p>Loading links...</p>
+    </div>
+
+    <script>
+        const container = document.getElementById('links-container');
+        const params = new URLSearchParams(window.location.search);
+        const rawParam = params.get('url');
+        const excludeParam = params.get('exclude');
+
+        if (!rawParam) {
+            container.innerHTML = `
+                <form id="url-form" class="url-form" autocomplete="off">
+                    <button type="button" id="paste-btn" class="paste-button">Paste</button>
+                    <input id="url-input" class="url-input" type="url" placeholder="Paste AltSource URL and press Enter or select Go" />
+                    <button type="submit" class="submit-button">Go</button>
+                </form>
+                <div id="url-error" class="error" style="display:none;"></div>
+            `;
+
+            const form = document.getElementById('url-form');
+            const input = document.getElementById('url-input');
+            const errorEl = document.getElementById('url-error');
+            const pasteBtn = document.getElementById('paste-btn');
+
+            setTimeout(() => { try { input.focus(); input.select(); } catch (e) {} }, 50);
+
+            pasteBtn.addEventListener('click', async function () {
+                errorEl.style.display = 'none';
+                try {
+                    const text = await navigator.clipboard.readText();
+                    input.value = text;
+                    input.focus();
+                    input.select();
+                } catch (e) {
+                    errorEl.textContent = 'Unable to read clipboard.';
+                    errorEl.style.display = 'block';
+                }
+            });
+
+            form.addEventListener('submit', function (ev) {
+                ev.preventDefault();
+                const rawVal = (input.value || '').trim();
+                if (!rawVal) {
+                    const el = document.getElementById('url-error');
+                    el.textContent = 'Please enter a valid URL.';
+                    el.style.display = 'block';
+                    input.focus();
+                    return;
+                }
+                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
+            });
+
+        } else {
+            let s = rawParam.trim();
+            s = s.replace(/\s+/g, '');
+            s = s.replace(/%20/gi, '');
+
+            if (!/^https?:\/\//i.test(s)) {
+                s = 'https://' + s;
+            }
+
+            const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
+
+            const base = 'https://intradeus.github.io/http-protocol-redirector?r=';
+            const sidestoreTarget = `sidestore://source?url=${s}`;
+            const altstoreTarget = `altstore-classic://source?url=${s}`;
+            const featherTarget = `feather://source/${s}`;
+            const livecontainerTarget = `livecontainer://source?url=${s}`;
+
+            const links = {
+                sidestore: base + sidestoreTarget,
+                altstore: base + altstoreTarget,
+                feather: base + featherTarget,
+                livecontainer: base + livecontainerTarget
+            };
+
+            let html = '';
+            if (!excludeList.includes('sidestore')) html += `<a class="custom-button sidestore" href="${links.sidestore}" target="_blank" rel="noopener noreferrer">Open in SideStore</a>`;
+            if (!excludeList.includes('altstore')) html += `<a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore</a>`;
+            if (!excludeList.includes('feather')) html += `<a class="custom-button feather" href="${links.feather}" target="_blank" rel="noopener noreferrer">Open in Feather</a>`;
+            if (!excludeList.includes('livecontainer')) html += `<a class="custom-button livecontainer" href="${links.livecontainer}" target="_blank" rel="noopener noreferrer">Open in LiveContainer</a>`;
+
+            html += `<button class="custom-button neutral" id="copy-link-btn">Copy Source URL</button>`;
+            html += `<button class="custom-button neutral" id="view-source-btn">View Source Data</button>`;
+
+            container.innerHTML = html;
+
+            const copyBtn = document.getElementById('copy-link-btn');
+            copyBtn.addEventListener('click', function () {
+                const text = s;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const prev = this.textContent;
+                        this.textContent = "Copied!";
+                        setTimeout(() => { this.textContent = prev; }, 1500);
+                    }).catch(() => fallbackCopy.call(this, text));
+                    return;
+                }
+                fallbackCopy.call(this, text);
+            });
+
+            function fallbackCopy(text) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'absolute';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                    this.textContent = "Copied!";
+                } catch (e) {
+                    this.textContent = "Failed to copy";
+                }
+                setTimeout(() => { this.textContent = "Copy Source URL"; }, 1500);
+            }
+
+            document.getElementById('view-source-btn').addEventListener('click', function () {
+                try {
+                    window.open(s, '_blank', 'noopener,noreferrer');
+                } catch (e) {
+                    const a = document.createElement('a');
+                    a.href = s;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
