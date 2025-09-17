@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AltSource Redirector</title>
+    <style>
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --button-font-size: 15px;
+            --title-font-size: 28px;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffedbf;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: calc(var(--safe-top) + 12px);
+            padding-right: calc(var(--safe-right) + 8px);
+            padding-left: calc(var(--safe-left) + 8px);
+            padding-bottom: calc(var(--safe-bottom) + 12px);
+            box-sizing: border-box;
+        }
+        h1 {
+            margin: 0 0 12px 0;
+            text-align: center;
+            font-size: var(--title-font-size);
+            line-height: 1.1;
+            word-break: break-word;
+            padding: 4px 8px;
+            font-weight: 800;
+            flex: 0 0 auto;
+        }
+        #links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            gap: 6px;
+            padding: 6px;
+            flex: 0 0 auto;
+        }
+        .custom-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 230px;
+            height: 44px;
+            margin: 4px auto;
+            padding: 0 12px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.15s;
+            cursor: pointer;
+            border: none;
+            font-size: var(--button-font-size);
+            box-sizing: border-box;
+            outline: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .custom-button.sidestore { background-color: #a405fa; }
+        .custom-button.sidestore:hover, .custom-button.sidestore:focus { background-color: #8304c8; }
+        .custom-button.altstore { background-color: #018084; }
+        .custom-button.altstore:hover, .custom-button.altstore:focus { background-color: #006f70; }
+        .custom-button.feather { background-color: #848ef9; }
+        .custom-button.feather:hover, .custom-button.feather:focus { background-color: #6f79d3; }
+        .custom-button.livecontainer { background-color: #0784fc; }
+        .custom-button.livecontainer:hover, .custom-button.livecontainer:focus { background-color: #056ed6; }
+        .custom-button.neutral { background-color: #6c757d; }
+        .custom-button.neutral:hover, .custom-button.neutral:focus { background-color: #5a6268; }
+        .centered-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            width: 100%;
+            max-width: 380px;
+            margin: 24px auto 0 auto;
+            color: #c0392b;
+            background: #fff7f7;
+            border: 1px solid #f0d6d6;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(200,60,60,0.07);
+            padding: 20px 12px 16px 12px;
+            font-size: 0.96em;
+            box-sizing: border-box;
+        }
+        code {
+            background: #f0f0f0;
+            border-radius: 5px;
+            padding: 2px 6px;
+            font-size: 0.98em;
+        }
+        .url-form {
+            display: flex;
+            width: 100%;
+            max-width: 420px;
+            gap: 8px;
+            margin-top: 6px;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .url-input {
+            flex: 1 1 auto;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.12s;
+            font-size: 12px;
+        }
+        .submit-button:hover { background-color: #0056b3; }
+        .paste-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.12s;
+            font-size: 12px;
+        }
+        .paste-button:hover { background-color: #218838; }
+        .hint {
+            margin-top: 12px;
+            font-size: 0.94em;
+            color: #333;
+            text-align: center;
+        }
+        .error {
+            color: #b21c1c;
+            font-size: 0.92em;
+            margin-top: 8px;
+        }
+        .credit {
+            position: fixed;
+            right: calc(var(--safe-right) + 10px);
+            bottom: calc(var(--safe-bottom) + 8px);
+            font-size: 12px;
+            color: #333;
+            background: rgba(255,255,255,0.6);
+            padding: 6px 8px;
+            border-radius: 6px;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .credit a {
+            text-decoration: underline;
+            color: inherit;
+        }
+        @media (orientation: portrait) {
+            body {
+                min-height: 100dvh;
+                padding-bottom: var(--safe-bottom);
+            }
+        }
+        @media (orientation: landscape) and (max-height: 460px) {
+            body {
+                padding-top: calc(var(--safe-top) + 6px);
+                padding-bottom: calc(var(--safe-bottom) + 6px);
+            }
+            #links-container { padding-top: 4px; }
+            .custom-button {
+                font-size: var(--button-font-size);
+                padding: 0 10px;
+                border-radius: 8px;
+                height: 44px;
+                width: 230px;
+            }
+        }
+        @media (max-height: 380px) {
+            .custom-button {
+                padding: 0 10px;
+                font-size: var(--button-font-size);
+                height: 44px;
+                width: 230px;
+            }
+        }
+        @media (orientation: landscape) and (max-height: 460px) {
+            h1 { font-size: var(--title-font-size); }
+        }
+        @media (max-height: 380px) {
+            h1 { font-size: var(--title-font-size); }
+        }
+    </style>
+</head>
+<body>
+    <h1>AltSource Redirector</h1>
+    <div id="links-container">Loading links...</div>
+
+    <script>
+        'use strict';
+        const container = document.getElementById('links-container');
+        const params = new URLSearchParams(window.location.search);
+        const rawParam = params.get('url');
+        const rParam = params.get('r');
+        const excludeParam = params.get('exclude');
+
+        function setContainer(contentNode) {
+            container.replaceChildren(contentNode);
+        }
+
+        function buildForm() {
+            const form = document.createElement('form');
+            form.id = 'url-form';
+            form.className = 'url-form';
+            form.autocomplete = 'off';
+
+            const pasteBtn = document.createElement('button');
+            pasteBtn.type = 'button';
+            pasteBtn.id = 'paste-btn';
+            pasteBtn.className = 'paste-button';
+            pasteBtn.textContent = 'Paste';
+
+            const input = document.createElement('input');
+            input.id = 'url-input';
+            input.className = 'url-input';
+            input.type = 'url';
+            input.placeholder = 'https://apps.altstore.io/';
+            input.setAttribute('aria-label', 'Source URL');
+
+            const submitBtn = document.createElement('button');
+            submitBtn.type = 'submit';
+            submitBtn.className = 'submit-button';
+            submitBtn.textContent = 'Go';
+
+            const errorEl = document.createElement('div');
+            errorEl.id = 'url-error';
+            errorEl.className = 'error';
+            errorEl.style.display = 'none';
+
+            form.append(pasteBtn, input, submitBtn);
+            const wrapper = document.createElement('div');
+            wrapper.append(form, errorEl);
+
+            setTimeout(() => { try { input.focus(); input.select(); } catch (_) {} }, 50);
+
+            pasteBtn.addEventListener('click', async () => {
+                errorEl.style.display = 'none';
+                try {
+                    if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error('unsupported');
+                    const text = await navigator.clipboard.readText();
+                    input.value = text;
+                    input.focus();
+                    input.select();
+                } catch (_) {
+                    errorEl.textContent = 'Unable to read clipboard.';
+                    errorEl.style.display = 'block';
+                }
+            });
+
+            form.addEventListener('submit', (ev) => {
+                ev.preventDefault();
+                const rawVal = (input.value || '').trim();
+                if (!rawVal) {
+                    errorEl.textContent = 'Please enter a valid URL.';
+                    errorEl.style.display = 'block';
+                    input.focus();
+                    return;
+                }
+                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
+            });
+
+            return wrapper;
+        }
+
+        function buildLinks(s, excludeList) {
+            const frag = document.createDocumentFragment();
+
+            const sidestoreTarget = 'sidestore://source?url=' + s;
+            const altstoreTarget = 'altstore-classic://source?url=' + s;
+            const featherTarget = 'feather://source/' + s;
+            const livecontainerTarget = 'livecontainer://source?url=' + s;
+
+            const linkMap = [
+                { key: 'sidestore', label: 'Open in SideStore', href: window.location.pathname + '?r=' + sidestoreTarget, cls: 'sidestore' },
+                { key: 'altstore', label: 'Open in AltStore Classic', href: window.location.pathname + '?r=' + altstoreTarget, cls: 'altstore' },
+                { key: 'feather', label: 'Open in Feather', href: window.location.pathname + '?r=' + featherTarget, cls: 'feather' },
+                { key: 'livecontainer', label: 'Open in LiveContainer', href: window.location.pathname + '?r=' + livecontainerTarget, cls: 'livecontainer' }
+            ];
+
+            for (const item of linkMap) {
+                if (excludeList.includes(item.key)) continue;
+                const a = document.createElement('a');
+                a.className = 'custom-button ' + item.cls;
+                a.href = item.href;
+                a.target = '_self';
+                a.rel = 'noopener';
+                a.textContent = item.label;
+                frag.appendChild(a);
+            }
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'custom-button neutral';
+            copyBtn.id = 'copy-link-btn';
+            copyBtn.type = 'button';
+            copyBtn.textContent = 'Copy Source URL';
+            copyBtn.addEventListener('click', function () {
+                const text = s;
+                const self = this;
+                function setTemp(msg, base) {
+                    const prev = self.textContent;
+                    self.textContent = msg;
+                    setTimeout(() => { self.textContent = base; }, 1500);
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        setTemp('Copied!', 'Copy Source URL');
+                    }).catch(() => {
+                        fallbackCopy(text, self);
+                    });
+                    return;
+                }
+                fallbackCopy(text, self);
+            });
+
+            function fallbackCopy(text, btn) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'absolute';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                    btn.textContent = 'Copied!';
+                } catch (_) {
+                    btn.textContent = 'Failed to copy';
+                }
+                setTimeout(() => { btn.textContent = 'Copy Source URL'; }, 1500);
+            }
+
+            const viewBtn = document.createElement('button');
+            viewBtn.className = 'custom-button neutral';
+            viewBtn.id = 'view-source-btn';
+            viewBtn.type = 'button';
+            viewBtn.textContent = 'View Source Data';
+            viewBtn.addEventListener('click', () => {
+                try {
+                    window.open(s, '_blank', 'noopener,noreferrer');
+                } catch (_) {
+                    const a = document.createElement('a');
+                    a.href = s;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+            frag.append(copyBtn, viewBtn);
+            return frag;
+        }
+
+        if (!rawParam && !rParam) {
+            setContainer(buildForm());
+        } else if (rawParam) {
+            let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
+            if (!/^https?:\/\//i.test(s)) {
+                s = 'https://' + s;
+            }
+            const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
+            setContainer(buildLinks(s, excludeList));
+        }
+    </script>
+
+    <script src="redirect.js"></script>
+
+    <div class="credit">Made with ❤️ by CelloSerenity. <a href="https://github.com/CelloSerenity/alts-redir" target="_blank" rel="noopener noreferrer">Source</a></div>
+</body>
+</html>
