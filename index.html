@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AltDirect</title>
+    <link rel="icon" href="assets/svg/Logo_Blue.svg" type="image/svg+xml" sizes="any">
+
+    <style>
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --button-font-size: 17px;
+            --title-font-size: 28px;
+        }
+        html, body { height: 100%; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F9FAFB;
+            color-scheme: light dark;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: calc(var(--safe-top) + 12px);
+            padding-right: calc(var(--safe-right) + 8px);
+            padding-left: calc(var(--safe-left) + 8px);
+            padding-bottom: calc(var(--safe-bottom) + 12px);
+            box-sizing: border-box;
+        }
+        .title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 8px 0;
+            padding: 4px 8px;
+            flex: 0 0 auto;
+        }
+        .title-row .logo {
+            height: var(--title-font-size);
+            width: auto;
+            display: block;
+        }
+        h1 {
+            margin: 0;
+            text-align: left;
+            font-size: var(--title-font-size);
+            line-height: 1.1;
+            word-break: break-word;
+            font-weight: 800;
+            flex: 0 0 auto;
+        }
+        #subtitle {
+            width: 100%;
+            max-width: min(900px, 96vw);
+            margin: 6px auto 10px;
+            padding: 0 4px;
+            font-size: 0.94em;
+            color: #333;
+            text-align: center;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+            display: none;
+        }
+        #links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            gap: 6px;
+            padding: 6px;
+            flex: 0 0 auto;
+        }
+        .custom-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 230px;
+            height: 44px;
+            margin: 4px auto;
+            padding: 0 12px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.15s, transform 0.12s ease, box-shadow 0.12s ease;
+            cursor: pointer;
+            border: none;
+            font-size: var(--button-font-size);
+            box-sizing: border-box;
+            outline: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
+            transform: translateY(0);
+            will-change: transform, box-shadow;
+        }
+        .custom-button:hover,
+        .custom-button:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.10);
+        }
+        .custom-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+        }
+        .custom-button:focus-visible {
+            outline: 2px solid #0A84FF;
+            outline-offset: 2px;
+        }
+        .custom-button.sidestore { background-color: #a405fa; }
+        .custom-button.sidestore:hover, .custom-button.sidestore:focus { background-color: #8304c8; }
+        .custom-button.altstore { background-color: #018084; }
+        .custom-button.altstore:hover, .custom-button.altstore:focus { background-color: #006f70; }
+        .custom-button.feather { background-color: #848ef9; }
+        .custom-button.feather:hover, .custom-button.feather:focus { background-color: #6f79d3; }
+        .custom-button.livecontainer { background-color: #0784fc; }
+        .custom-button.livecontainer:hover, .custom-button.livecontainer:focus { background-color: #056ed6; }
+        .custom-button.neutral { background-color: #6c757d; }
+        .custom-button.neutral:hover, .custom-button.neutral:focus { background-color: #5a6268; }
+        .url-form {
+            display: flex;
+            width: 100%;
+            max-width: 420px;
+            gap: 8px;
+            margin-top: 6px;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .url-input {
+            flex: 1 1 auto;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.12s;
+            font-size: 12px;
+        }
+        .submit-button:hover { background-color: #0056b3; }
+        .paste-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.12s;
+            font-size: 12px;
+        }
+        .paste-button:hover { background-color: #218838; }
+        .hint {
+            font-size: 0.94em;
+            color: #333;
+            text-align: center;
+        }
+        .error {
+            color: #b21c1c;
+            font-size: 0.92em;
+            margin-top: 8px;
+        }
+        .credit {
+            position: fixed;
+            right: calc(var(--safe-right) + 10px);
+            bottom: calc(var(--safe-bottom) + 8px);
+            font-size: 12px;
+            color: #333;
+            background: rgba(255,255,255,0.6);
+            padding: 6px 8px;
+            border-radius: 6px;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            opacity: 0.6;
+        }
+        .credit a { text-decoration: underline; color: inherit; }
+        @media (orientation: portrait) {
+            body { min-height: 100dvh; padding-bottom: var(--safe-bottom); }
+        }
+        @media (orientation: landscape) and (max-height: 460px) {
+            body { padding-top: calc(var(--safe-top) + 6px); padding-bottom: calc(var(--safe-bottom) + 6px); }
+            #links-container { padding-top: 4px; }
+            .custom-button { padding: 0 10px; border-radius: 8px; height: 44px; width: 230px; }
+            h1 { font-size: var(--title-font-size); }
+            .title-row .logo { height: var(--title-font-size); }
+        }
+        @media (max-height: 380px) {
+            .custom-button { padding: 0 10px; font-size: var(--button-font-size); height: 44px; width: 230px; }
+            h1 { font-size: var(--title-font-size); }
+            .title-row .logo { height: var(--title-font-size); }
+        }
+        @media (prefers-color-scheme: light) {
+            .credit {
+                opacity: 1;
+                background: rgba(255,255,255,0.9);
+                color: #111827;
+                border: 1px solid rgba(0,0,0,0.06);
+                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #121212; }
+            h1 { color: #F5F5F7; }
+            #subtitle, .hint { color: #A1A1AA; }
+            .custom-button {
+                box-shadow: 0 6px 16px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.35);
+            }
+            .custom-button:hover,
+            .custom-button:focus {
+                box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.4);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-row">
+        <img src="assets/svg/Logo_Blue.svg" alt="AltDirect logo" class="logo">
+        <h1>AltDirect</h1>
+    </div>
+
+    <div id="subtitle" class="hint" aria-live="polite"></div>
+
+    <div id="links-container">Loading...</div>
+
+    <script>
+        'use strict';
+        const container = document.getElementById('links-container');
+        const subtitle = document.getElementById('subtitle');
+        const params = new URLSearchParams(window.location.search);
+        const rawParam = params.get('url');
+        const rParam = params.get('r');
+        const excludeParam = params.get('exclude');
+
+        function setContainer(contentNode) {
+            container.replaceChildren(contentNode);
+        }
+
+        function createEl(tag, attrs, text) {
+            const el = document.createElement(tag);
+            if (attrs) for (const k in attrs) el.setAttribute(k, attrs[k]);
+            if (text != null) el.textContent = text;
+            return el;
+        }
+
+        function buildForm() {
+            subtitle.style.display = 'none';
+            const form = createEl('form', { id: 'url-form', class: 'url-form', autocomplete: 'off' });
+            const pasteBtn = createEl('button', { type: 'button', id: 'paste-btn', class: 'paste-button' }, 'Paste');
+            const input = createEl('input', { id: 'url-input', class: 'url-input', type: 'url', placeholder: 'https://apps.altstore.io/', 'aria-label': 'Source URL' });
+            const submitBtn = createEl('button', { type: 'submit', class: 'submit-button' }, 'Go');
+            const errorEl = createEl('div', { id: 'url-error', class: 'error' });
+            errorEl.style.display = 'none';
+
+            form.append(pasteBtn, input, submitBtn);
+            const wrapper = document.createElement('div');
+            wrapper.append(form, errorEl);
+
+            setTimeout(() => { try { input.focus(); input.select(); } catch (_) {} }, 50);
+
+            pasteBtn.addEventListener('click', async () => {
+                errorEl.style.display = 'none';
+                try {
+                    if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error();
+                    const text = await navigator.clipboard.readText();
+                    input.value = text;
+                    input.focus();
+                    input.select();
+                } catch (_) {
+                    errorEl.textContent = 'Unable to read clipboard.';
+                    errorEl.style.display = 'block';
+                }
+            });
+
+            form.addEventListener('submit', (ev) => {
+                ev.preventDefault();
+                const rawVal = (input.value || '').trim();
+                if (!rawVal) {
+                    errorEl.textContent = 'Please enter a valid URL.';
+                    errorEl.style.display = 'block';
+                    input.focus();
+                    return;
+                }
+                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
+            });
+
+            return wrapper;
+        }
+
+        function replaceQueryParam(qs, key, val) {
+            const q = qs ? qs.replace(/^\?/, '') : '';
+            const parts = q ? q.split('&') : [];
+            const filtered = [];
+            for (let i = 0; i < parts.length; i++) {
+                const p = parts[i];
+                if (!p) continue;
+                const k = p.split('=')[0];
+                if (k !== key) filtered.push(p);
+            }
+            if (val != null) filtered.push(key + '=' + val);
+            return filtered.join('&');
+        }
+
+        function buildLinks(s, excludeList) {
+            subtitle.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
+            subtitle.style.display = 'block';
+            const frag = document.createDocumentFragment();
+
+            function hrefWithR(choice) {
+                const loc = window.location;
+                const newQs = replaceQueryParam(loc.search, 'r', choice);
+                return loc.pathname + (newQs ? '?' + newQs : '');
+            }
+
+            const linkMap = [
+                { key: 'sidestore', label: 'Open in SideStore', href: hrefWithR('sidestore'), cls: 'sidestore' },
+                { key: 'altstore', label: 'Open in AltStore Classic', href: hrefWithR('altstore'), cls: 'altstore' },
+                { key: 'feather', label: 'Open in Feather', href: hrefWithR('feather'), cls: 'feather' },
+                { key: 'livecontainer', label: 'Open in LiveContainer', href: hrefWithR('livecontainer'), cls: 'livecontainer' }
+            ];
+
+            for (let i = 0; i < linkMap.length; i++) {
+                const item = linkMap[i];
+                if (excludeList.includes(item.key)) continue;
+                const a = createEl('a', { class: 'custom-button ' + item.cls, href: item.href, target: '_self', rel: 'noopener' }, item.label);
+                frag.appendChild(a);
+            }
+
+            function fallbackCopy(text, btn) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'absolute';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                    btn.textContent = 'Copied!';
+                } catch (_) {
+                    btn.textContent = 'Failed to copy';
+                }
+                setTimeout(() => { btn.textContent = 'Copy Source URL'; }, 1500);
+            }
+
+            const copyBtn = createEl('button', { class: 'custom-button neutral', id: 'copy-link-btn', type: 'button' }, 'Copy Source URL');
+            copyBtn.addEventListener('click', function () {
+                const text = s;
+                const self = this;
+                function setTemp(msg, base) {
+                    const prev = self.textContent;
+                    self.textContent = msg;
+                    setTimeout(() => { self.textContent = base; }, 1500);
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        setTemp('Copied!', 'Copy Source URL');
+                    }).catch(() => {
+                        fallbackCopy(text, self);
+                    });
+                    return;
+                }
+                fallbackCopy(text, self);
+            });
+
+            const viewBtn = createEl('button', { class: 'custom-button neutral', id: 'view-source-btn', type: 'button' }, 'View Source Data');
+            viewBtn.addEventListener('click', () => {
+                try {
+                    window.open(s, '_blank', 'noopener,noreferrer');
+                } catch (_) {
+                    const a = document.createElement('a');
+                    a.href = s;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+            frag.append(copyBtn, viewBtn);
+            return frag;
+        }
+
+        if (!rawParam && !rParam) {
+            setContainer(buildForm());
+        } else if (rawParam) {
+            let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
+            if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+            const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
+            setContainer(buildLinks(s, excludeList));
+        }
+    </script>
+
+    <script src="redirect.js"></script>
+
+    <div class="credit">Made with ❤️ by CelloSerenity. <a href="https://github.com/CelloSerenity/altdirect" target="_blank" rel="noopener noreferrer">Source</a></div>
+</body>
+</html>
