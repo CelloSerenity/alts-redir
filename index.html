@@ -73,6 +73,13 @@
         .custom-button.feather:focus {
             background-color: #5a329f;
         }
+        .custom-button.livecontainer {
+            background-color: #ff7a59;
+        }
+        .custom-button.livecontainer:hover,
+        .custom-button.livecontainer:focus {
+            background-color: #e06647;
+        }
         .custom-button.neutral {
             background-color: #6c757d;
         }
@@ -227,17 +234,20 @@
             const sidestoreTarget = `sidestore://source?url=${s}`;
             const altstoreTarget = `altstore-classic://source?url=${s}`;
             const featherTarget = `feather://source/${s}`;
+            const livecontainerTarget = `livecontainer://source?url=${s}`;
 
             const links = {
                 sidestore: base + sidestoreTarget,
                 altstore: base + altstoreTarget,
-                feather: base + featherTarget
+                feather: base + featherTarget,
+                livecontainer: base + livecontainerTarget
             };
 
             container.innerHTML = `
                 <a class="custom-button sidestore" href="${links.sidestore}" target="_blank" rel="noopener noreferrer">Open in SideStore</a>
                 <a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore</a>
                 <a class="custom-button feather" href="${links.feather}" target="_blank" rel="noopener noreferrer">Open in Feather</a>
+                <a class="custom-button livecontainer" href="${links.livecontainer}" target="_blank" rel="noopener noreferrer">Open in LiveContainer</a>
                 <button class="custom-button neutral" id="copy-link-btn">Copy Source URL</button>
                 <button class="custom-button neutral" id="view-source-btn">View Source Data</button>
             `;
