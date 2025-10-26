@@ -219,9 +219,8 @@
                     input.focus();
                     return;
                 }
-                const encodedUrl = encodeURIComponent(rawVal);
-                const excludePart = excludeParam ? '&exclude=' + encodeURIComponent(excludeParam) : '';
-                window.location.href = window.location.pathname + '?url=' + encodedUrl + excludePart;
+                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
             });
 
         } else {
