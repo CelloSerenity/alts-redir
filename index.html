@@ -177,6 +177,7 @@
         const container = document.getElementById('links-container');
         const params = new URLSearchParams(window.location.search);
         const rawParam = params.get('url');
+        const excludeParam = params.get('exclude');
 
         if (!rawParam) {
             container.innerHTML = `
@@ -218,7 +219,9 @@
                     input.focus();
                     return;
                 }
-                window.location.href = window.location.pathname + '?url=' + rawVal;
+                const encodedUrl = encodeURIComponent(rawVal);
+                const excludePart = excludeParam ? '&exclude=' + encodeURIComponent(excludeParam) : '';
+                window.location.href = window.location.pathname + '?url=' + encodedUrl + excludePart;
             });
 
         } else {
@@ -229,6 +232,8 @@
             if (!/^https?:\/\//i.test(s)) {
                 s = 'https://' + s;
             }
+
+            const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
 
             const base = 'https://intradeus.github.io/http-protocol-redirector?r=';
             const sidestoreTarget = `sidestore://source?url=${s}`;
@@ -243,14 +248,16 @@
                 livecontainer: base + livecontainerTarget
             };
 
-            container.innerHTML = `
-                <a class="custom-button sidestore" href="${links.sidestore}" target="_blank" rel="noopener noreferrer">Open in SideStore</a>
-                <a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore</a>
-                <a class="custom-button feather" href="${links.feather}" target="_blank" rel="noopener noreferrer">Open in Feather</a>
-                <a class="custom-button livecontainer" href="${links.livecontainer}" target="_blank" rel="noopener noreferrer">Open in LiveContainer</a>
-                <button class="custom-button neutral" id="copy-link-btn">Copy Source URL</button>
-                <button class="custom-button neutral" id="view-source-btn">View Source Data</button>
-            `;
+            let html = '';
+            if (!excludeList.includes('sidestore')) html += `<a class="custom-button sidestore" href="${links.sidestore}" target="_blank" rel="noopener noreferrer">Open in SideStore</a>`;
+            if (!excludeList.includes('altstore')) html += `<a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore</a>`;
+            if (!excludeList.includes('feather')) html += `<a class="custom-button feather" href="${links.feather}" target="_blank" rel="noopener noreferrer">Open in Feather</a>`;
+            if (!excludeList.includes('livecontainer')) html += `<a class="custom-button livecontainer" href="${links.livecontainer}" target="_blank" rel="noopener noreferrer">Open in LiveContainer</a>`;
+
+            html += `<button class="custom-button neutral" id="copy-link-btn">Copy Source URL</button>`;
+            html += `<button class="custom-button neutral" id="view-source-btn">View Source Data</button>`;
+
+            container.innerHTML = html;
 
             const copyBtn = document.getElementById('copy-link-btn');
             copyBtn.addEventListener('click', function () {
