@@ -183,7 +183,7 @@
             container.innerHTML = `
                 <form id="url-form" class="url-form" autocomplete="off">
                     <button type="button" id="paste-btn" class="paste-button">Paste</button>
-                    <input id="url-input" class="url-input" type="url" placeholder="Paste AltSource URL and press Enter or select Go" />
+                    <input id="url-input" class="url-input" type="url" placeholder="https://apps.altstore.io/" />
                     <button type="submit" class="submit-button">Go</button>
                 </form>
                 <div id="url-error" class="error" style="display:none;"></div>
@@ -249,7 +249,7 @@
 
             let html = '';
             if (!excludeList.includes('sidestore')) html += `<a class="custom-button sidestore" href="${links.sidestore}" target="_blank" rel="noopener noreferrer">Open in SideStore</a>`;
-            if (!excludeList.includes('altstore')) html += `<a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore</a>`;
+            if (!excludeList.includes('altstore')) html += `<a class="custom-button altstore" href="${links.altstore}" target="_blank" rel="noopener noreferrer">Open in AltStore Classic</a>`;
             if (!excludeList.includes('feather')) html += `<a class="custom-button feather" href="${links.feather}" target="_blank" rel="noopener noreferrer">Open in Feather</a>`;
             if (!excludeList.includes('livecontainer')) html += `<a class="custom-button livecontainer" href="${links.livecontainer}" target="_blank" rel="noopener noreferrer">Open in LiveContainer</a>`;
 
