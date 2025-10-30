@@ -309,6 +309,11 @@
         function buildLinks(s, excludeList) {
             const frag = document.createDocumentFragment();
 
+            const note = document.createElement('div');
+            note.className = 'hint';
+            note.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
+            frag.appendChild(note);
+
             const sidestoreTarget = 'sidestore://source?url=' + s;
             const altstoreTarget = 'altstore-classic://source?url=' + s;
             const featherTarget = 'feather://source/' + s;
@@ -331,11 +336,6 @@
                 a.textContent = item.label;
                 frag.appendChild(a);
             }
-
-            const note = document.createElement('div');
-            note.className = 'hint';
-            note.textContent = 'You must have your chosen sideloader already installed for the redirector to work.';
-            frag.appendChild(note);
 
             const copyBtn = document.createElement('button');
             copyBtn.className = 'custom-button neutral';
