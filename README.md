@@ -21,7 +21,7 @@ Live page: https://celloserenity.github.io/alts-redir/
 - Zero build step, zero external dependencies — just static HTML + JS.
 
 >[!CAUTION]
->Links including question marks (?) or ampersands (&) may encounter issues. I'll look into it if it actually poses a problem to anyone.
+>AltSource URLs including question marks (?) or ampersands (&) may encounter issues. I'll look into fixing it if it actually poses a problem for anyone.
 
 ---
 
