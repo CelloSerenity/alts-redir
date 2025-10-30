@@ -332,6 +332,11 @@
                 frag.appendChild(a);
             }
 
+            const note = document.createElement('div');
+            note.className = 'hint';
+            note.textContent = 'You must have your chosen sideloader already installed for the redirector to work.';
+            frag.appendChild(note);
+
             const copyBtn = document.createElement('button');
             copyBtn.className = 'custom-button neutral';
             copyBtn.id = 'copy-link-btn';
