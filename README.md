@@ -1,8 +1,8 @@
 # AltSource Redirector
 
-A tiny, dependency‑free static helper page for launching AltStore Sources (or AltSource) feeds in your preferred sideloading app. Paste or pass a source URL and quickly open it in SideStore, AltStore Classic, Feather, or LiveContainer — or deep‑link straight into an app using a single `r` parameter.
+A tiny, dependency‑free static helper page for launching AltStore Sources (or AltSources) in your preferred sideloading app. Paste or pass an AltSource URL and quickly open it in SideStore, AltStore Classic, Feather, or LiveContainer — or deep‑link straight into an app using a single `r` parameter.
 
-Live page: https://celloserenity.github.io/alts-redir/
+Live page: https://celloserenity.github.io/altsource/
 
 ---
 
@@ -58,20 +58,20 @@ Files:
 
 ## Examples
 
-Using the hosted page at https://celloserenity.github.io/alts-redir:
+Using the hosted page at https://celloserenity.github.io/altsource:
 
 - Render buttons for a source feed:
-  - `https://celloserenity.github.io/alts-redir/?url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altsource/?url=https://example.com/source.json`
 - Render buttons, hide specific targets:
-  - `https://celloserenity.github.io/alts-redir/?url=https://example.com/source.json&exclude=altstore,feather`
+  - `https://celloserenity.github.io/altsource/?url=https://example.com/source.json&exclude=altstore,feather`
 - Direct deep link to SideStore (immediate redirect):
-  - `https://celloserenity.github.io/alts-redir/?r=sidestore://source?url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altsource/?r=sidestore://source?url=https://example.com/source.json`
 - Direct deep link to AltStore Classic:
-  - `https://celloserenity.github.io/alts-redir/?r=altstore-classic://source?url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altsource/?r=altstore-classic://source?url=https://example.com/source.json`
 - Direct deep link to Feather:
-  - `https://celloserenity.github.io/alts-redir/?r=feather://source/https://example.com/source.json`
+  - `https://celloserenity.github.io/altsource/?r=feather://source/https://example.com/source.json`
 - Direct deep link to LiveContainer:
-  - `https://celloserenity.github.io/alts-redir/?r=livecontainer://source?url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altsource/?r=livecontainer://source?url=https://example.com/source.json`
 
 Note: The app schemes above are constructed exactly as this tool generates them.
 
