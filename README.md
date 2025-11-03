@@ -1,8 +1,8 @@
-# AltSource Redirector
+# AltDirect
 
 A tiny, dependency‑free static helper page for launching AltStore Sources (AltSources) in your preferred sideloading app. Paste or pass an AltSource feed URL and quickly open it in SideStore, AltStore Classic, Feather, or LiveContainer.
 
-Live page: https://celloserenity.github.io/altsource/
+Live page: https://celloserenity.github.io/altdirect/
 
 ---
 
@@ -60,20 +60,20 @@ Files:
 
 ## Examples
 
-Using the hosted page at https://celloserenity.github.io/altsource:
+Using the hosted page at https://celloserenity.github.io/altdirect:
 
 - Render buttons for a source feed:
-  - `https://celloserenity.github.io/altsource/?url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altdirect/?url=https://example.com/source.json`
 - Render buttons, hide specific targets:
-  - `https://celloserenity.github.io/altsource/?url=https://example.com/source.json&exclude=altstore,feather`
+  - `https://celloserenity.github.io/altdirect/?url=https://example.com/source.json&exclude=altstore,feather`
 - Direct deep link to SideStore (immediate redirect):
-  - `https://celloserenity.github.io/altsource/?r=sidestore&url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altdirect/?r=sidestore&url=https://example.com/source.json`
 - Direct deep link to AltStore Classic:
-  - `https://celloserenity.github.io/altsource/?r=altstore&url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altdirect/?r=altstore&url=https://example.com/source.json`
 - Direct deep link to Feather:
-  - `https://celloserenity.github.io/altsource/?r=feather&url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altdirect/?r=feather&url=https://example.com/source.json`
 - Direct deep link to LiveContainer:
-  - `https://celloserenity.github.io/altsource/?r=livecontainer&url=https://example.com/source.json`
+  - `https://celloserenity.github.io/altdirect/?r=livecontainer&url=https://example.com/source.json`
 
 Note: The app schemes above are constructed exactly as this tool generates them.
 
@@ -89,6 +89,8 @@ Note: The app schemes above are constructed exactly as this tool generates them.
 ## Acknowledgments
 
 - AltStore, SideStore, Feather, and LiveContainer are trademarks of their respective owners. This project is unaffiliated and simply provides convenience links.
+- [@Transistor](https://github.com/transistor-exe) for the logos
+- [@Meshal](https://github.com/Meshal-GIT) for the catchy name ;)
 
 ---
 
