@@ -299,11 +299,8 @@
                     input.focus();
                     return;
                 }
-                const sp = new URLSearchParams();
-                sp.set('url', rawVal);
-                if (excludeParam) sp.set('exclude', excludeParam);
-                const next = window.location.pathname + '?' + sp.toString();
-                window.location.href = next;
+                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
             });
 
             return wrapper;
@@ -318,12 +315,14 @@
             frag.appendChild(note);
 
             function hrefWithR(choice) {
-                const url = new URL(window.location.href);
-                const p = new URLSearchParams(url.search);
-                p.delete('r');
-                p.append('r', choice);
-                const qs = p.toString();
-                return url.pathname + (qs ? '?' + qs : '');
+                const loc = window.location;
+                const search = loc.search || '';
+                const q = search ? search.slice(1) : '';
+                let parts = q ? q.split('&') : [];
+                parts = parts.filter(p => (p.split('=')[0] !== 'r'));
+                parts.push('r=' + choice);
+                const newQs = parts.join('&');
+                return loc.pathname + (newQs ? '?' + newQs : '');
             }
 
             const linkMap = [
