@@ -13,15 +13,8 @@
             --button-font-size: 15px;
             --title-font-size: 28px;
         }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        html {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
+        html, body { height: 100%; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
         body {
             font-family: Arial, sans-serif;
             background-color: #ffedbf;
@@ -94,30 +87,6 @@
         .custom-button.livecontainer:hover, .custom-button.livecontainer:focus { background-color: #056ed6; }
         .custom-button.neutral { background-color: #6c757d; }
         .custom-button.neutral:hover, .custom-button.neutral:focus { background-color: #5a6268; }
-        .centered-message {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 120px;
-            width: 100%;
-            max-width: 380px;
-            margin: 24px auto 0 auto;
-            color: #c0392b;
-            background: #fff7f7;
-            border: 1px solid #f0d6d6;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(200,60,60,0.07);
-            padding: 20px 12px 16px 12px;
-            font-size: 0.96em;
-            box-sizing: border-box;
-        }
-        code {
-            background: #f0f0f0;
-            border-radius: 5px;
-            padding: 2px 6px;
-            font-size: 0.98em;
-        }
         .url-form {
             display: flex;
             width: 100%;
@@ -185,42 +154,18 @@
             backdrop-filter: blur(4px);
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
-        .credit a {
-            text-decoration: underline;
-            color: inherit;
-        }
+        .credit a { text-decoration: underline; color: inherit; }
         @media (orientation: portrait) {
-            body {
-                min-height: 100dvh;
-                padding-bottom: var(--safe-bottom);
-            }
+            body { min-height: 100dvh; padding-bottom: var(--safe-bottom); }
         }
         @media (orientation: landscape) and (max-height: 460px) {
-            body {
-                padding-top: calc(var(--safe-top) + 6px);
-                padding-bottom: calc(var(--safe-bottom) + 6px);
-            }
+            body { padding-top: calc(var(--safe-top) + 6px); padding-bottom: calc(var(--safe-bottom) + 6px); }
             #links-container { padding-top: 4px; }
-            .custom-button {
-                font-size: var(--button-font-size);
-                padding: 0 10px;
-                border-radius: 8px;
-                height: 44px;
-                width: 230px;
-            }
-        }
-        @media (max-height: 380px) {
-            .custom-button {
-                padding: 0 10px;
-                font-size: var(--button-font-size);
-                height: 44px;
-                width: 230px;
-            }
-        }
-        @media (orientation: landscape) and (max-height: 460px) {
+            .custom-button { padding: 0 10px; border-radius: 8px; height: 44px; width: 230px; }
             h1 { font-size: var(--title-font-size); }
         }
         @media (max-height: 380px) {
+            .custom-button { padding: 0 10px; font-size: var(--button-font-size); height: 44px; width: 230px; }
             h1 { font-size: var(--title-font-size); }
         }
     </style>
@@ -241,33 +186,19 @@
             container.replaceChildren(contentNode);
         }
 
+        function createEl(tag, attrs, text) {
+            const el = document.createElement(tag);
+            if (attrs) for (const k in attrs) el.setAttribute(k, attrs[k]);
+            if (text != null) el.textContent = text;
+            return el;
+        }
+
         function buildForm() {
-            const form = document.createElement('form');
-            form.id = 'url-form';
-            form.className = 'url-form';
-            form.autocomplete = 'off';
-
-            const pasteBtn = document.createElement('button');
-            pasteBtn.type = 'button';
-            pasteBtn.id = 'paste-btn';
-            pasteBtn.className = 'paste-button';
-            pasteBtn.textContent = 'Paste';
-
-            const input = document.createElement('input');
-            input.id = 'url-input';
-            input.className = 'url-input';
-            input.type = 'url';
-            input.placeholder = 'https://apps.altstore.io/';
-            input.setAttribute('aria-label', 'Source URL');
-
-            const submitBtn = document.createElement('button');
-            submitBtn.type = 'submit';
-            submitBtn.className = 'submit-button';
-            submitBtn.textContent = 'Go';
-
-            const errorEl = document.createElement('div');
-            errorEl.id = 'url-error';
-            errorEl.className = 'error';
+            const form = createEl('form', { id: 'url-form', class: 'url-form', autocomplete: 'off' });
+            const pasteBtn = createEl('button', { type: 'button', id: 'paste-btn', class: 'paste-button' }, 'Paste');
+            const input = createEl('input', { id: 'url-input', class: 'url-input', type: 'url', placeholder: 'https://apps.altstore.io/', 'aria-label': 'Source URL' });
+            const submitBtn = createEl('button', { type: 'submit', class: 'submit-button' }, 'Go');
+            const errorEl = createEl('div', { id: 'url-error', class: 'error' });
             errorEl.style.display = 'none';
 
             form.append(pasteBtn, input, submitBtn);
@@ -279,7 +210,7 @@
             pasteBtn.addEventListener('click', async () => {
                 errorEl.style.display = 'none';
                 try {
-                    if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error('unsupported');
+                    if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error();
                     const text = await navigator.clipboard.readText();
                     input.value = text;
                     input.focus();
@@ -306,22 +237,29 @@
             return wrapper;
         }
 
+        function replaceQueryParam(qs, key, val) {
+            const q = qs ? qs.replace(/^\?/, '') : '';
+            const parts = q ? q.split('&') : [];
+            const filtered = [];
+            for (let i = 0; i < parts.length; i++) {
+                const p = parts[i];
+                if (!p) continue;
+                const k = p.split('=')[0];
+                if (k !== key) filtered.push(p);
+            }
+            if (val != null) filtered.push(key + '=' + val);
+            return filtered.join('&');
+        }
+
         function buildLinks(s, excludeList) {
             const frag = document.createDocumentFragment();
 
-            const note = document.createElement('div');
-            note.className = 'hint';
-            note.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
+            const note = createEl('div', { class: 'hint' }, 'Note: You must have your chosen sideloader already installed for the redirector to work.');
             frag.appendChild(note);
 
             function hrefWithR(choice) {
                 const loc = window.location;
-                const search = loc.search || '';
-                const q = search ? search.slice(1) : '';
-                let parts = q ? q.split('&') : [];
-                parts = parts.filter(p => (p.split('=')[0] !== 'r'));
-                parts.push('r=' + choice);
-                const newQs = parts.join('&');
+                const newQs = replaceQueryParam(loc.search, 'r', choice);
                 return loc.pathname + (newQs ? '?' + newQs : '');
             }
 
@@ -332,40 +270,12 @@
                 { key: 'livecontainer', label: 'Open in LiveContainer', href: hrefWithR('livecontainer'), cls: 'livecontainer' }
             ];
 
-            for (const item of linkMap) {
+            for (let i = 0; i < linkMap.length; i++) {
+                const item = linkMap[i];
                 if (excludeList.includes(item.key)) continue;
-                const a = document.createElement('a');
-                a.className = 'custom-button ' + item.cls;
-                a.href = item.href;
-                a.target = '_self';
-                a.rel = 'noopener';
-                a.textContent = item.label;
+                const a = createEl('a', { class: 'custom-button ' + item.cls, href: item.href, target: '_self', rel: 'noopener' }, item.label);
                 frag.appendChild(a);
             }
-
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'custom-button neutral';
-            copyBtn.id = 'copy-link-btn';
-            copyBtn.type = 'button';
-            copyBtn.textContent = 'Copy Source URL';
-            copyBtn.addEventListener('click', function () {
-                const text = s;
-                const self = this;
-                function setTemp(msg, base) {
-                    const prev = self.textContent;
-                    self.textContent = msg;
-                    setTimeout(() => { self.textContent = base; }, 1500);
-                }
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        setTemp('Copied!', 'Copy Source URL');
-                    }).catch(() => {
-                        fallbackCopy(text, self);
-                    });
-                    return;
-                }
-                fallbackCopy(text, self);
-            });
 
             function fallbackCopy(text, btn) {
                 try {
@@ -385,11 +295,27 @@
                 setTimeout(() => { btn.textContent = 'Copy Source URL'; }, 1500);
             }
 
-            const viewBtn = document.createElement('button');
-            viewBtn.className = 'custom-button neutral';
-            viewBtn.id = 'view-source-btn';
-            viewBtn.type = 'button';
-            viewBtn.textContent = 'View Source Data';
+            const copyBtn = createEl('button', { class: 'custom-button neutral', id: 'copy-link-btn', type: 'button' }, 'Copy Source URL');
+            copyBtn.addEventListener('click', function () {
+                const text = s;
+                const self = this;
+                function setTemp(msg, base) {
+                    const prev = self.textContent;
+                    self.textContent = msg;
+                    setTimeout(() => { self.textContent = base; }, 1500);
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        setTemp('Copied!', 'Copy Source URL');
+                    }).catch(() => {
+                        fallbackCopy(text, self);
+                    });
+                    return;
+                }
+                fallbackCopy(text, self);
+            });
+
+            const viewBtn = createEl('button', { class: 'custom-button neutral', id: 'view-source-btn', type: 'button' }, 'View Source Data');
             viewBtn.addEventListener('click', () => {
                 try {
                     window.open(s, '_blank', 'noopener,noreferrer');
@@ -412,9 +338,7 @@
             setContainer(buildForm());
         } else if (rawParam) {
             let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
-            if (!/^https?:\/\//i.test(s)) {
-                s = 'https://' + s;
-            }
+            if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
             const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
             setContainer(buildLinks(s, excludeList));
         }
