@@ -1,6 +1,6 @@
 # AltSource Redirector
 
-A tiny, dependency‑free static helper page for launching AltStore Sources (or AltSources) in your preferred sideloading app. Paste or pass an AltSource URL and quickly open it in SideStore, AltStore Classic, Feather, or LiveContainer — or deep‑link straight into an app using a single `r` parameter.
+A tiny, dependency‑free static helper page for launching AltStore Sources (or AltSources) in your preferred sideloading app. Paste or pass an AltSource URL and quickly open it in SideStore, AltStore Classic, Feather, or LiveContainer — or deep‑link straight into an app using a single `r` parameter. Caution: This project is unfinished and the link format is subject to change without notice. This note will be changed when it is finished.
 
 Live page: https://celloserenity.github.io/altsource/
 
