@@ -299,8 +299,11 @@
                     input.focus();
                     return;
                 }
-                const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
-                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
+                const sp = new URLSearchParams();
+                sp.set('url', rawVal);
+                if (excludeParam) sp.set('exclude', excludeParam);
+                const next = window.location.pathname + '?' + sp.toString();
+                window.location.href = next;
             });
 
             return wrapper;
