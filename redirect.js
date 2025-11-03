@@ -2,13 +2,16 @@ const sp = new URLSearchParams(window.location.search)
 const r = (sp.get("r") || "").toLowerCase()
 const sourceUrl = sp.get("url")
 
+const schemes = {
+  sidestore: s => "sidestore://source?url=" + s,
+  altstore: s => "altstore-classic://source?url=" + s,
+  feather: s => "feather://source/" + s,
+  livecontainer: s => "livecontainer://source?url=" + s
+}
+
 function resolveTarget(kind, s) {
-  if (!kind || !s) return ""
-  if (kind === "sidestore") return "sidestore://source?url=" + s
-  if (kind === "altstore") return "altstore-classic://source?url=" + s
-  if (kind === "feather") return "feather://source/" + s
-  if (kind === "livecontainer") return "livecontainer://source?url=" + s
-  return ""
+  const fn = schemes[kind]
+  return fn && s ? fn(s) : ""
 }
 
 const target = resolveTarget(r, sourceUrl)
