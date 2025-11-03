@@ -314,16 +314,20 @@
             note.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
             frag.appendChild(note);
 
-            const sidestoreTarget = 'sidestore://source?url=' + s;
-            const altstoreTarget = 'altstore-classic://source?url=' + s;
-            const featherTarget = 'feather://source/' + s;
-            const livecontainerTarget = 'livecontainer://source?url=' + s;
+            function hrefWithR(choice) {
+                const url = new URL(window.location.href);
+                const p = new URLSearchParams(url.search);
+                p.delete('r');
+                p.append('r', choice);
+                const qs = p.toString();
+                return url.pathname + (qs ? '?' + qs : '');
+            }
 
             const linkMap = [
-                { key: 'sidestore', label: 'Open in SideStore', href: window.location.pathname + '?r=' + sidestoreTarget, cls: 'sidestore' },
-                { key: 'altstore', label: 'Open in AltStore Classic', href: window.location.pathname + '?r=' + altstoreTarget, cls: 'altstore' },
-                { key: 'feather', label: 'Open in Feather', href: window.location.pathname + '?r=' + featherTarget, cls: 'feather' },
-                { key: 'livecontainer', label: 'Open in LiveContainer', href: window.location.pathname + '?r=' + livecontainerTarget, cls: 'livecontainer' }
+                { key: 'sidestore', label: 'Open in SideStore', href: hrefWithR('sidestore'), cls: 'sidestore' },
+                { key: 'altstore', label: 'Open in AltStore Classic', href: hrefWithR('altstore'), cls: 'altstore' },
+                { key: 'feather', label: 'Open in Feather', href: hrefWithR('feather'), cls: 'feather' },
+                { key: 'livecontainer', label: 'Open in LiveContainer', href: hrefWithR('livecontainer'), cls: 'livecontainer' }
             ];
 
             for (const item of linkMap) {
