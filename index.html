@@ -29,15 +29,40 @@
             padding-bottom: calc(var(--safe-bottom) + 12px);
             box-sizing: border-box;
         }
+        .title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 8px 0;
+            padding: 4px 8px;
+            flex: 0 0 auto;
+        }
+        .title-row .logo {
+            height: var(--title-font-size);
+            width: auto;
+            display: block;
+        }
         h1 {
-            margin: 0 0 12px 0;
-            text-align: center;
+            margin: 0;
+            text-align: left;
             font-size: var(--title-font-size);
             line-height: 1.1;
             word-break: break-word;
-            padding: 4px 8px;
             font-weight: 800;
             flex: 0 0 auto;
+        }
+        #subtitle {
+            width: 100%;
+            max-width: min(900px, 96vw);
+            margin: 6px auto 10px;
+            padding: 0 4px;
+            font-size: 0.94em;
+            color: #333;
+            text-align: center;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+            display: none;
         }
         #links-container {
             display: flex;
@@ -131,7 +156,6 @@
         }
         .paste-button:hover { background-color: #218838; }
         .hint {
-            margin-top: 12px;
             font-size: 0.94em;
             color: #333;
             text-align: center;
@@ -163,20 +187,29 @@
             #links-container { padding-top: 4px; }
             .custom-button { padding: 0 10px; border-radius: 8px; height: 44px; width: 230px; }
             h1 { font-size: var(--title-font-size); }
+            .title-row .logo { height: var(--title-font-size); }
         }
         @media (max-height: 380px) {
             .custom-button { padding: 0 10px; font-size: var(--button-font-size); height: 44px; width: 230px; }
             h1 { font-size: var(--title-font-size); }
+            .title-row .logo { height: var(--title-font-size); }
         }
     </style>
 </head>
 <body>
-    <h1>AltSource Redirector</h1>
+    <div class="title-row">
+        <img src="/assets/svg/AltDirect Blue.svg" alt="AltDirect logo" class="logo">
+        <h1>AltSource Redirector</h1>
+    </div>
+
+    <div id="subtitle" class="hint" aria-live="polite"></div>
+
     <div id="links-container">Loading...</div>
 
     <script>
         'use strict';
         const container = document.getElementById('links-container');
+        const subtitle = document.getElementById('subtitle');
         const params = new URLSearchParams(window.location.search);
         const rawParam = params.get('url');
         const rParam = params.get('r');
@@ -194,6 +227,7 @@
         }
 
         function buildForm() {
+            subtitle.style.display = 'none';
             const form = createEl('form', { id: 'url-form', class: 'url-form', autocomplete: 'off' });
             const pasteBtn = createEl('button', { type: 'button', id: 'paste-btn', class: 'paste-button' }, 'Paste');
             const input = createEl('input', { id: 'url-input', class: 'url-input', type: 'url', placeholder: 'https://apps.altstore.io/', 'aria-label': 'Source URL' });
@@ -252,10 +286,9 @@
         }
 
         function buildLinks(s, excludeList) {
+            subtitle.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
+            subtitle.style.display = 'block';
             const frag = document.createDocumentFragment();
-
-            const note = createEl('div', { class: 'hint' }, 'Note: You must have your chosen sideloader already installed for the redirector to work.');
-            frag.appendChild(note);
 
             function hrefWithR(choice) {
                 const loc = window.location;
