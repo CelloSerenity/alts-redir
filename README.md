@@ -17,11 +17,11 @@ Live page: https://celloserenity.github.io/altsource/
 - Provides convenient actions:
   - Copy Source URL
   - View Source Data (opens the feed URL in a new tab)
-- Mobile‑friendly UI with safe‑area insets (great on iOS).
+- Mobile‑friendly UI.
 - Zero build step, zero external dependencies — just static HTML + JS.
 
 >[!CAUTION]
->AltSource URLs including question marks (?) or ampersands (&) may encounter issues if not URL‑encoded. I’ll look into fixing it if it actually poses a problem for anyone.
+>AltSource URLs including question marks (?) or ampersands (&) may encounter issues. I’ll look into fixing it if it actually poses a problem for anyone.
 
 ---
 
