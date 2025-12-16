@@ -27,6 +27,8 @@ Live page: https://celloserenity.github.io/altdirect/
 ---
 
 ## How it works
+> [!NOTE]
+> For Notarized AltStore sources (e.g. AltStore PAL sources), utilize `https://api.altstore.io/source/example.com?app=com.developer.myapp` instead of this tool.
 
 - If no query parameters are provided, you’ll see a simple form where you can paste a source URL (with Paste and Go actions).
 - If `?url=…` is present, the page renders “Open in …” buttons. Clicking a button updates the URL to include `r=<target>` while preserving your `url` (and `exclude` if present).
