@@ -7,6 +7,8 @@ A tiny, dependency‑free static helper page for launching AltStore Sources (Alt
 Live page: https://celloserenity.github.io/altdirect/
 
 ---
+> [!NOTE]
+> To distribute notarized AltStore sources (i.e. AltStore PAL sources), utilize `https://api.altstore.io/source/example.com?app=com.developer.myapp` instead of this tool.
 
 ## What it does
 
@@ -14,7 +16,7 @@ Live page: https://celloserenity.github.io/altdirect/
   - SideStore
   - AltStore Classic
   - Feather
-  - LiveContainer
+  - LiveContainer (currently only supports nightly)
 - Supports one‑tap deep linking via the `r` (redirect target) parameter together with the `url` parameter.
 - Provides convenient actions:
   - Copy Source URL
@@ -27,8 +29,6 @@ Live page: https://celloserenity.github.io/altdirect/
 ---
 
 ## How it works
-> [!NOTE]
-> For Notarized AltStore sources (e.g. AltStore PAL sources), utilize `https://api.altstore.io/source/example.com?app=com.developer.myapp` instead of this tool.
 
 - If no query parameters are provided, you’ll see a simple form where you can paste a source URL (with Paste and Go actions).
 - If `?url=…` is present, the page renders “Open in …” buttons. Clicking a button updates the URL to include `r=<target>` while preserving your `url` (and `exclude` if present).
