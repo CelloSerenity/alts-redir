@@ -65,30 +65,26 @@ Create your link using the query parameters below. These parameters are stable a
 
 ### Image Embedding
 
-Create a link above and insert it into the following code snippet (replace the example URL with your source):
+Create a link using the parameters outlined above and insert it into the following code snippet (replace the example URL with your source). If you wish, you can also embed a direct download link to an .ipa (replace `https://example.com/app.ipa` with your link) for image consistency:
 
 ```html
-<a href="https://celloserenity.github.io/altdirect/?url=https://example.com/source.json&exclude=altstore,feather" target="_blank">
-  <img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/AltSource_Blue.png?raw=true" alt="Add AltSource" width="200">
+<!-- you can set the alighnment here to left/center/right -->
+<h1 align="left">
+<a href="https://celloserenity.github.io/altdirect/?url=https://example.com/source.json"><img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/AltSource_Blue.png?raw=true" target="_blank" width="200">
 </a>
-```
-
-If you wish, you can also embed a direct link to your .ipa (replace `https://example.com/app.ipa` with your .ipa download link) for image consistency:
-
-```html
-<a href="https://example.com/app.ipa" target="_blank">
-  <img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/Download_Blue.png?raw=true" alt="Download .ipa" width="200">
+<a href="https://example.com/app.ipa"><img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/Download_Blue.png?raw=true" target="_blank" width="200">
 </a>
+</h1>
 ```
 
 Together, they appear as:
 
-<a href="https://celloserenity.github.io/altdirect/?url=https://example.com/source.json" target="_blank">
-  <img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/AltSource_Blue.png?raw=true" alt="Add AltSource" width="200">
+<h1 align="left">
+<a href="https://celloserenity.github.io/altdirect/?url=https://example.com/source.json" target="_blank"><img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/AltSource_Blue.png?raw=true" width="200">
 </a>
-<a href="https://example.com/app.ipa" target="_blank">
-  <img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/Download_Blue.png?raw=true" alt="Download .ipa" width="200">
+<a href="https://example.com/app.ipa" target="_blank"><img src="https://github.com/CelloSerenity/altdirect/blob/main/assets/png/Download_Blue.png?raw=true" width="200">
 </a>
+</h1>
 
 Pretty nice, huh?
 
@@ -100,14 +96,12 @@ Note: The URL format and asset links will not be modified in a way that breaks s
 
 Using the hosted page at https://celloserenity.github.io/altdirect:
 
-- Render buttons for a source feed:
+- Display redirectors for an AltStore Source:
   - `https://celloserenity.github.io/altdirect/?url=https://example.com/source.json`
-- Render buttons, hide specific targets:
+- Hide certain app redirector:
   - `https://celloserenity.github.io/altdirect/?url=https://example.com/source.json&exclude=altstore,feather`
 - Direct deep link to SideStore (automatic redirect):
   - `https://celloserenity.github.io/altdirect/?url=https://example.com/source.json&r=sidestore`
-
-Note: The app schemes above are constructed exactly as this tool generates them.
 
 ---
 
