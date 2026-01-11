@@ -5,8 +5,9 @@ const sourceUrl = sp.get("url")
 const schemes = {
   sidestore: s => "sidestore://source?url=" + s,
   altstore: s => "altstore-classic://source?url=" + s,
-  feather: s => "feather://source/" + s,
-  livecontainer: s => "livecontainer://source?url=" + s
+  stikstore: s => "stikstore://add-source?url=" + s,
+  livecontainer: s => "livecontainer://source?url=" + s,
+  feather: s => "feather://source/" + s
 }
 
 function resolveTarget(kind, s) {
