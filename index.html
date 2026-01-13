@@ -8,246 +8,275 @@
 
     <style>
         :root {
+            --primary-color: #2997ff;
+            --bg-color: #000000;
+            --text-color: #f5f5f7;
+            --secondary-text: #86868b;
+            
+            --glass-bg: rgba(30, 30, 35, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-highlight: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(25px);
+
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-right: env(safe-area-inset-right, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
             --safe-left: env(safe-area-inset-left, 0px);
-            --button-font-size: 17px;
-            --title-font-size: 28px;
         }
+
         html, body { height: 100%; margin: 0; padding: 0; }
         html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #F9FAFB;
-            color-scheme: light dark;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding-top: calc(var(--safe-top) + 12px);
-            padding-right: calc(var(--safe-right) + 8px);
-            padding-left: calc(var(--safe-left) + 8px);
-            padding-bottom: calc(var(--safe-bottom) + 12px);
+            justify-content: center;
+            padding: calc(var(--safe-top) + 20px) calc(var(--safe-right) + 20px) calc(var(--safe-bottom) + 20px) calc(var(--safe-left) + 20px);
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
-        .title-row {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 0 0 8px 0;
-            padding: 4px 8px;
-            flex: 0 0 auto;
-        }
-        .title-row .logo {
-            height: var(--title-font-size);
-            width: auto;
-            display: block;
-        }
-        h1 {
-            margin: 0;
-            text-align: left;
-            font-size: var(--title-font-size);
-            line-height: 1.1;
-            word-break: break-word;
-            font-weight: 800;
-            flex: 0 0 auto;
-        }
-        #subtitle {
-            width: 100%;
-            max-width: min(900px, 96vw);
-            margin: 6px auto 10px;
-            padding: 0 4px;
-            font-size: 0.94em;
-            color: #333;
+
+        .hero {
             text-align: center;
-            line-height: 1.3;
-            word-wrap: break-word;
-            overflow-wrap: anywhere;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .app-icon:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0 0 12px;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: #fff;
+        }
+
+        h1 span {
+            color: var(--primary-color);
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            margin: 0 auto 32px;
+            font-weight: 400;
+        }
+
+        #tagline {
+            transition: opacity 0.3s ease;
+        }
+
+        #subtitle {
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+            line-height: 1.5;
             display: none;
         }
+
         #links-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 140px;
+            gap: 12px;
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            box-sizing: border-box;
-            gap: 6px;
-            padding: 6px;
-            flex: 0 0 auto;
         }
+
+        .url-form-wrapper {
+            width: 100%;
+            max-width: 420px;
+            margin-bottom: 24px;
+        }
+
+        .url-form {
+            display: flex;
+            background: var(--glass-bg);
+            padding: 8px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur) saturate(180%);
+            -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
+            gap: 8px;
+        }
+
+        .url-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 17px;
+            outline: none;
+            min-width: 0;
+        }
+
+        .submit-button {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-button:hover {
+            opacity: 0.9;
+        }
+
+        .submit-button:active {
+            transform: scale(0.96);
+        }
+
+        .paste-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .paste-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .custom-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            flex: 0 0 auto;
-            width: 230px;
-            height: 44px;
-            margin: 4px auto;
-            padding: 0 12px;
+            width: 100%;
+            height: 54px;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            transition: background-color 0.15s, transform 0.12s ease, box-shadow 0.12s ease;
+            border-radius: 18px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
             cursor: pointer;
-            border: none;
-            font-size: var(--button-font-size);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             box-sizing: border-box;
-            outline: none;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
-            transform: translateY(0);
-            will-change: transform, box-shadow;
         }
-        .custom-button:hover,
-        .custom-button:focus {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.10);
+
+        .custom-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
         }
+
         .custom-button:active {
             transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
         }
-        .custom-button:focus-visible {
-            outline: 2px solid #0A84FF;
-            outline-offset: 2px;
-        }
-        .custom-button.sidestore { background-color: #a405fa; }
-        .custom-button.sidestore:hover, .custom-button.sidestore:focus { background-color: #8304c8; }
-        .custom-button.altstore { background-color: #018084; }
-        .custom-button.altstore:hover, .custom-button.altstore:focus { background-color: #007375; }
-        .custom-button.stikstore { background-color: #3b86f7; }
-        .custom-button.stikstore:hover, .custom-button.stikstore:focus { background-color: #316dc6; }
-        .custom-button.livecontainer { background-color: #0784fc; }
-        .custom-button.livecontainer:hover, .custom-button.livecontainer:focus { background-color: #056ed6; }
-        .custom-button.feather { background-color: #848ef9; }
-        .custom-button.feather:hover, .custom-button.feather:focus { background-color: #6f79d3; }
-        .custom-button.neutral { background-color: #6c757d; }
-        .custom-button.neutral:hover, .custom-button.neutral:focus { background-color: #5a6268; }
-        .url-form {
-            display: flex;
-            width: 100%;
-            max-width: 420px;
-            gap: 8px;
-            margin-top: 6px;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-        .url-input {
-            flex: 1 1 auto;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 13px;
-            box-sizing: border-box;
-            min-width: 0;
-        }
-        .submit-button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 7px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.12s;
-            font-size: 12px;
-        }
-        .submit-button:hover { background-color: #0056b3; }
-        .paste-button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 6px 8px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.12s;
-            font-size: 12px;
-        }
-        .paste-button:hover { background-color: #218838; }
-        .hint {
-            font-size: 0.94em;
-            color: #333;
-            text-align: center;
-        }
+
+        .custom-button.sidestore { background-color: rgba(164, 5, 250, 0.6); border-color: rgba(164, 5, 250, 0.8); }
+        .custom-button.sidestore:hover { background-color: rgba(164, 5, 250, 0.8); }
+        
+        .custom-button.altstore { background-color: rgba(1, 128, 132, 0.6); border-color: rgba(1, 128, 132, 0.8); }
+        .custom-button.altstore:hover { background-color: rgba(1, 128, 132, 0.8); }
+        
+        .custom-button.stikstore { background-color: rgba(59, 134, 247, 0.6); border-color: rgba(59, 134, 247, 0.8); }
+        .custom-button.stikstore:hover { background-color: rgba(59, 134, 247, 0.8); }
+        
+        .custom-button.livecontainer { background-color: rgba(7, 132, 252, 0.6); border-color: rgba(7, 132, 252, 0.8); }
+        .custom-button.livecontainer:hover { background-color: rgba(7, 132, 252, 0.8); }
+        
+        .custom-button.feather { background-color: rgba(132, 142, 249, 0.6); border-color: rgba(132, 142, 249, 0.8); }
+        .custom-button.feather:hover { background-color: rgba(132, 142, 249, 0.8); }
+        
+        .custom-button.neutral { background-color: rgba(255, 255, 255, 0.15); }
+        .custom-button.neutral:hover { background-color: rgba(255, 255, 255, 0.25); }
+
         .error {
-            color: #b21c1c;
-            font-size: 0.92em;
-            margin-top: 8px;
+            color: #ff453a;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            background: rgba(255, 69, 58, 0.1);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 69, 58, 0.2);
         }
+
         .credit {
             position: fixed;
-            right: calc(var(--safe-right) + 10px);
-            bottom: calc(var(--safe-bottom) + 8px);
+            right: calc(var(--safe-right) + 16px);
+            bottom: calc(var(--safe-bottom) + 16px);
             font-size: 12px;
-            color: #333;
-            background: rgba(255,255,255,0.6);
-            padding: 6px 8px;
-            border-radius: 6px;
+            color: var(--secondary-text);
+            background: var(--glass-bg);
+            padding: 8px 12px;
+            border-radius: 12px;
             z-index: 9999;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            opacity: 0.6;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
         }
-        .credit a { text-decoration: underline; color: inherit; }
-        @media (orientation: portrait) {
-            body { min-height: 100dvh; padding-bottom: var(--safe-bottom); }
+
+        .credit a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
         }
-        @media (orientation: landscape) and (max-height: 460px) {
-            body { padding-top: calc(var(--safe-top) + 6px); padding-bottom: calc(var(--safe-bottom) + 6px); }
-            #links-container { padding-top: 4px; }
-            .custom-button { padding: 0 10px; border-radius: 8px; height: 44px; width: 230px; }
-            h1 { font-size: var(--title-font-size); }
-            .title-row .logo { height: var(--title-font-size); }
-        }
-        @media (max-height: 380px) {
-            .custom-button { padding: 0 10px; font-size: var(--button-font-size); height: 44px; width: 230px; }
-            h1 { font-size: var(--title-font-size); }
-            .title-row .logo { height: var(--title-font-size); }
-        }
-        @media (prefers-color-scheme: light) {
-            .credit {
-                opacity: 1;
-                background: rgba(255,255,255,0.9);
-                color: #111827;
-                border: 1px solid rgba(0,0,0,0.06);
-                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            body { background-color: #121212; }
-            h1 { color: #F5F5F7; }
-            #subtitle, .hint { color: #A1A1AA; }
-            .custom-button {
-                box-shadow: 0 6px 16px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.35);
-            }
-            .custom-button:hover,
-            .custom-button:focus {
-                box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.4);
-            }
+
+        .credit a:hover {
+            opacity: 1;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="title-row">
-        <img src="assets/svg/Logo_Blue.svg" alt="AltDirect logo" class="logo">
-        <h1>AltDirect</h1>
+
+    <div class="hero">
+        <svg width="100" height="100" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon">
+            <path d="M167.822 256H88.1778V233.636H167.822V256ZM22.6694 187.754C23.8473 201.628 28.4122 212.443 36.1111 220.024C43.5857 227.499 54.5064 232.132 68.2667 233.325V255.778C47.4259 254.514 30.9298 247.762 19.5833 236.415C8.01834 224.973 1.46739 208.519 0.222222 187.754H22.6694ZM255.883 187.754C254.615 208.519 247.954 224.973 236.389 236.415C225.165 247.639 208.678 254.492 187.733 255.775V233.32C201.592 232.103 212.521 227.385 220 220.024C227.699 212.443 232.264 201.628 233.442 187.754H255.883ZM128 49.072C132.868 49.072 137.662 50.2665 141.961 52.5501C146.261 54.8341 149.935 58.1392 152.661 62.1734C153.236 63.0693 153.825 63.9557 154.419 64.8376L109.311 110.04C104.286 115.07 101.221 121.732 101.3 129.033C101.379 136.282 104.539 142.782 109.381 147.652L109.483 147.755L109.589 147.858C114.453 152.552 120.884 155.556 127.989 155.625C135.155 155.695 141.774 152.762 146.856 147.822L146.928 147.752L146.997 147.683L191.911 102.775C193.247 103.699 194.598 104.604 195.967 105.484C200 108.21 203.305 111.885 205.589 116.185C207.872 120.485 209.067 125.279 209.067 130.147C209.067 135.016 207.872 139.81 205.589 144.11C203.305 148.41 200 152.085 195.967 154.811C178.59 165.971 163.82 180.743 152.661 198.121C149.935 202.156 146.261 205.461 141.961 207.745C137.662 210.028 132.868 211.223 128 211.223C123.132 211.223 118.338 210.028 114.039 207.745C109.739 205.461 106.065 202.156 103.339 198.121C92.1799 180.743 77.4098 165.971 60.0333 154.811C55.9996 152.085 52.6948 148.41 50.4111 144.11C48.1277 139.81 46.9333 135.016 46.9333 130.147C46.9333 125.279 48.1277 120.485 50.4111 116.185C52.6948 111.885 55.9996 108.21 60.0333 105.484C77.4098 94.3235 92.1799 79.5517 103.339 62.1734C106.065 58.1392 109.739 54.8341 114.039 52.5501C118.338 50.2665 123.132 49.072 128 49.072ZM22.3611 167.84H0V88.1873H22.3611V167.84ZM241.778 0C250.058 1.39468e-05 256 6.38511 256 14.2238V136.74C256 144.284 251.282 149.35 244.622 149.35C237.668 149.35 233.245 143.254 233.244 136.74V102.411L234.222 38.1903L213.522 60.351L136.942 136.912C131.637 142.07 124.565 141.833 119.467 136.912C114.311 131.726 114.133 124.623 119.378 119.377L195.961 42.6407L217.772 22.4469L150.756 22.758H119.467C112.954 22.758 106.667 18.0095 106.667 11.379C106.667 4.60073 111.629 0 119.467 0H241.778ZM68.2667 22.6802C54.4758 23.8993 43.4685 28.6181 36.1111 35.9761C28.407 43.5626 23.8407 54.3863 22.6667 68.2741H0.225C1.48786 47.4952 8.13756 31.0326 19.5833 19.5855C30.8059 8.36165 47.4024 1.50656 68.2667 0.222246V22.6802Z" fill="url(#paint0_linear_120_31)"/>
+            <defs>
+                <linearGradient id="paint0_linear_120_31" x1="128" y1="0" x2="128" y2="256" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#56B2FF"/>
+                    <stop offset="1" stop-color="#008CFF"/>
+                </linearGradient>
+            </defs>
+        </svg>
+        <h1>Alt<span>Direct</span></h1>
+        <p class="description" id="tagline">Sources, simplified.</p>
+
+        <div id="subtitle" class="hint" aria-live="polite"></div>
+
+        <div id="links-container">Loading...</div>
     </div>
 
-    <div id="subtitle" class="hint" aria-live="polite"></div>
-
-    <div id="links-container">Loading...</div>
+    <div class="credit">
+        Made with ❤️ by <a href="https://github.com/CelloSerenity" target="_blank" rel="noopener">CelloSerenity</a>. <a href="https://github.com/CelloSerenity/altdirect" target="_blank" rel="noopener">Source</a>
+    </div>
 
     <script>
         'use strict';
@@ -271,18 +300,26 @@
 
         function buildForm() {
             subtitle.style.display = 'none';
+            const tagline = document.getElementById('tagline');
+            if (tagline) tagline.style.display = 'block';
+
+            const wrapper = createEl('div', { class: 'url-form-wrapper' });
             const form = createEl('form', { id: 'url-form', class: 'url-form', autocomplete: 'off' });
-            const pasteBtn = createEl('button', { type: 'button', id: 'paste-btn', class: 'paste-button' }, 'Paste');
-            const input = createEl('input', { id: 'url-input', class: 'url-input', type: 'url', placeholder: 'https://apps.altstore.io/', 'aria-label': 'Source URL' });
-            const submitBtn = createEl('button', { type: 'submit', class: 'submit-button' }, 'Go');
+            const input = createEl('input', { id: 'url-input', class: 'url-input', type: 'url', placeholder: 'Enter Source URL...', 'aria-label': 'Source URL' });
+            
+            const pasteBtn = createEl('button', { type: 'button', id: 'paste-btn', class: 'paste-button', title: 'Paste' });
+            pasteBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>';
+            
+            const submitBtn = createEl('button', { type: 'submit', class: 'submit-button', title: 'Go' });
+            submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+            
             const errorEl = createEl('div', { id: 'url-error', class: 'error' });
             errorEl.style.display = 'none';
 
-            form.append(pasteBtn, input, submitBtn);
-            const wrapper = document.createElement('div');
+            form.append(input, pasteBtn, submitBtn);
             wrapper.append(form, errorEl);
 
-            setTimeout(() => { try { input.focus(); input.select(); } catch (_) {} }, 50);
+            setTimeout(() => { try { input.focus(); } catch (_) {} }, 50);
 
             pasteBtn.addEventListener('click', async () => {
                 errorEl.style.display = 'none';
@@ -290,8 +327,6 @@
                     if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error();
                     const text = await navigator.clipboard.readText();
                     input.value = text;
-                    input.focus();
-                    input.select();
                 } catch (_) {
                     errorEl.textContent = 'Unable to read clipboard.';
                     errorEl.style.display = 'block';
@@ -308,7 +343,7 @@
                     return;
                 }
                 const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
-                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
+                window.location.href = window.location.pathname + '?url=' + encodeURIComponent(rawVal) + excludePart;
             });
 
             return wrapper;
@@ -329,8 +364,12 @@
         }
 
         function buildLinks(s, excludeList) {
-            subtitle.textContent = 'Note: You must have your chosen sideloader already installed for the redirector to work.';
+            subtitle.textContent = 'Choose your sideloader:';
             subtitle.style.display = 'block';
+            
+            const tagline = document.getElementById('tagline');
+            if (tagline) tagline.style.display = 'none';
+
             const frag = document.createDocumentFragment();
 
             function hrefWithR(choice) {
@@ -354,57 +393,21 @@
                 frag.appendChild(a);
             }
 
-            function fallbackCopy(text, btn) {
-                try {
-                    const ta = document.createElement('textarea');
-                    ta.value = text;
-                    ta.setAttribute('readonly', '');
-                    ta.style.position = 'absolute';
-                    ta.style.left = '-9999px';
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    ta.remove();
-                    btn.textContent = 'Copied!';
-                } catch (_) {
-                    btn.textContent = 'Failed to copy';
-                }
-                setTimeout(() => { btn.textContent = 'Copy Source URL'; }, 1500);
-            }
-
             const copyBtn = createEl('button', { class: 'custom-button neutral', id: 'copy-link-btn', type: 'button' }, 'Copy Source URL');
             copyBtn.addEventListener('click', function () {
-                const text = s;
                 const self = this;
-                function setTemp(msg, base) {
-                    const prev = self.textContent;
-                    self.textContent = msg;
-                    setTimeout(() => { self.textContent = base; }, 1500);
-                }
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        setTemp('Copied!', 'Copy Source URL');
-                    }).catch(() => {
-                        fallbackCopy(text, self);
+                    navigator.clipboard.writeText(s).then(() => {
+                        const prev = self.textContent;
+                        self.textContent = 'Copied!';
+                        setTimeout(() => { self.textContent = prev; }, 1500);
                     });
-                    return;
                 }
-                fallbackCopy(text, self);
             });
 
             const viewBtn = createEl('button', { class: 'custom-button neutral', id: 'view-source-btn', type: 'button' }, 'View Source Data');
             viewBtn.addEventListener('click', () => {
-                try {
-                    window.open(s, '_blank', 'noopener,noreferrer');
-                } catch (_) {
-                    const a = document.createElement('a');
-                    a.href = s;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                }
+                window.open(s, '_blank', 'noopener,noreferrer');
             });
 
             frag.append(copyBtn, viewBtn);
@@ -414,7 +417,7 @@
         if (!rawParam && !rParam) {
             setContainer(buildForm());
         } else if (rawParam) {
-            let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
+            let s = decodeURIComponent(rawParam).replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
             if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
             const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
             setContainer(buildLinks(s, excludeList));
@@ -422,7 +425,5 @@
     </script>
 
     <script src="redirect.js"></script>
-
-    <div class="credit">Made with ❤️ by CelloSerenity. <a href="https://github.com/CelloSerenity/altdirect" target="_blank" rel="noopener noreferrer">Source</a></div>
 </body>
 </html>
