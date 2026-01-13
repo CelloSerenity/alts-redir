@@ -18,10 +18,72 @@
             --glass-highlight: rgba(255, 255, 255, 0.08);
             --glass-blur: blur(25px);
 
+            --neutral-btn-bg: rgba(255, 255, 255, 0.15);
+            --neutral-btn-hover: rgba(255, 255, 255, 0.25);
+
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-right: env(safe-area-inset-right, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
             --safe-left: env(safe-area-inset-left, 0px);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+                --bg-color: #f5f5f7;
+                --text-color: #1d1d1f;
+                --secondary-text: #86868b;
+                
+                --glass-bg: rgba(255, 255, 255, 0.65);
+                --glass-border: rgba(0, 0, 0, 0.1);
+                --glass-highlight: rgba(255, 255, 255, 0.5);
+                
+                --neutral-btn-bg: rgba(0, 0, 0, 0.05);
+                --neutral-btn-hover: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        :root[data-theme="light"] {
+            --bg-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --secondary-text: #86868b;
+            
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            
+            --neutral-btn-bg: rgba(0, 0, 0, 0.05);
+            --neutral-btn-hover: rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: calc(var(--safe-top) + 20px);
+            right: calc(var(--safe-right) + 20px);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--neutral-btn-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            z-index: 100;
+            transition: background 0.2s, transform 0.2s;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .theme-toggle:hover {
+            background: var(--neutral-btn-hover);
+            transform: scale(1.05);
+        }
+        
+        .theme-toggle:active {
+            transform: scale(0.95);
         }
 
         html, body { height: 100%; margin: 0; padding: 0; }
@@ -66,7 +128,7 @@
             line-height: 1.1;
             font-weight: 800;
             letter-spacing: -1.5px;
-            color: #fff;
+            color: var(--text-color);
         }
 
         h1 span {
@@ -123,7 +185,7 @@
             flex: 1;
             background: transparent;
             border: none;
-            color: #fff;
+            color: var(--text-color);
             padding: 12px 20px;
             font-size: 17px;
             outline: none;
@@ -152,8 +214,8 @@
         }
 
         .paste-button {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            background: var(--neutral-btn-bg);
+            color: var(--text-color);
             border: none;
             padding: 0 20px;
             border-radius: 100px;
@@ -165,7 +227,7 @@
         }
 
         .paste-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--neutral-btn-hover);
         }
 
         .custom-button {
@@ -213,8 +275,8 @@
         .custom-button.feather { background-color: rgba(132, 142, 249, 0.6); border-color: rgba(132, 142, 249, 0.8); }
         .custom-button.feather:hover { background-color: rgba(132, 142, 249, 0.8); }
         
-        .custom-button.neutral { background-color: rgba(255, 255, 255, 0.15); }
-        .custom-button.neutral:hover { background-color: rgba(255, 255, 255, 0.25); }
+        .custom-button.neutral { background-color: var(--neutral-btn-bg); color: var(--text-color); }
+        .custom-button.neutral:hover { background-color: var(--neutral-btn-hover); }
 
         .error {
             color: #ff453a;
@@ -227,22 +289,19 @@
         }
 
         .credit {
-            position: fixed;
-            right: calc(var(--safe-right) + 16px);
-            bottom: calc(var(--safe-bottom) + 16px);
+            margin-top: 20px;
             font-size: 12px;
             color: var(--secondary-text);
             background: var(--glass-bg);
             padding: 8px 12px;
             border-radius: 12px;
-            z-index: 9999;
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
         }
 
         .credit a {
-            color: #fff;
+            color: var(--text-color);
             text-decoration: none;
             opacity: 0.8;
             transition: opacity 0.2s;
@@ -255,6 +314,7 @@
     </style>
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme"></button>
 
     <div class="hero">
         <svg width="100" height="100" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon">
@@ -280,6 +340,46 @@
 
     <script>
         'use strict';
+        
+        // Theme Toggle Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+        
+        function isLight() {
+            return root.getAttribute('data-theme') === 'light' || 
+                   (!root.hasAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: light)').matches);
+        }
+
+        function updateIcon() {
+            const light = isLight();
+            // Moon for Light mode (to switch to Dark), Sun for Dark mode (to switch to Light)
+            toggleBtn.innerHTML = light 
+                ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
+                : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+        }
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            root.setAttribute('data-theme', savedTheme);
+        }
+        updateIcon();
+
+        toggleBtn.addEventListener('click', () => {
+            const currentIsLight = isLight();
+            const newTheme = currentIsLight ? 'dark' : 'light';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon();
+        });
+
+        // Listen for system changes if no manual override
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+            if (!localStorage.getItem('theme')) {
+                updateIcon();
+            }
+        });
+
         const container = document.getElementById('links-container');
         const subtitle = document.getElementById('subtitle');
         const params = new URLSearchParams(window.location.search);
