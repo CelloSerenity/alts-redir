@@ -33,13 +33,13 @@ Live page: https://celloserenity.github.io/altdirect/
 ## How it works
 
 - If no query parameters are provided, you’ll see a simple form where you can enter a source URL (with Paste and Go actions).
-- If `?url=…` is present, the page renders “Open in …” buttons. Clicking a button updates the URL to include `r=<target>` while preserving your `url` (and `exclude` if present).
-- If both `?r=…` and `?url=…` are present, `redirect.js` immediately redirects the browser to the app’s custom scheme based on `r`.
+- If `?url=…` is present, the page renders “Open in …”, "Copy…" and "View…" redirector buttons, excluding redirects defined by the `&exclude=…` parameter. Clicking a button updates the URL to include `r=<target>` while preserving your `url` and `exclude`.
+- If both `?url=…` and `&r=…` are present, `redirect.js` immediately redirects the browser to the app’s custom scheme based on `r`.
 
 Files:
 - `index.html` — UI, query‑param handling, and link generation.
 - `redirect.js` — minimal redirect helper that reads `r` and `url`, maps `r` to an app scheme, and performs `window.location.replace(...)`.
-- `assets` folder — contains pngs and svgs for logo, as well as Add AltSource and Download .ipa buttons.
+- `assets` folder — contains pngs and svgs for the logo, as well as "Add AltSource" and "Download .ipa" buttons.
 
 ---
 
@@ -52,14 +52,15 @@ Create your link using the query parameters below. These parameters are stable a
 - `url` (string, optional)
   - The source/feed URL (http/https). Leading/trailing spaces are trimmed (including `%20`) and, if the scheme is omitted, `https://` is automatically prefixed.
   - Example values:
-    - `https://apps.altstore.io/`
-    - `apps.altstore.io` (becomes `https://apps.altstore.io`)
+    - `?url=https://apps.altstore.io/`
+    - `?url=apps.altstore.io` (becomes `?url=https://apps.altstore.io`)
 - `exclude` (string, optional)
   - Comma‑separated list of buttons to hide. Valid keys:
     - `sidestore`, `altstore`, `stikstore`, `livecontainer`, `feather`
-  - Example: `exclude=altstore,feather`
+  - Example: `&exclude=altstore,feather`
 - `r` (string, optional)
   - Valid keys matches `exclude`. Only one entry.
+  - Example: `exclude=altstore,feather`
   - Must be used with `url` present. When present, the page immediately redirects using these mappings:
     - `sidestore` → `sidestore://source?url=<url>`
     - `altstore` → `altstore-classic://source?url=<url>`
