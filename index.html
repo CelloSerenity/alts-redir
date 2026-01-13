@@ -72,7 +72,6 @@
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             z-index: 100;
-            transition: background 0.2s, transform 0.2s;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
@@ -102,6 +101,7 @@
             padding: calc(var(--safe-top) + 20px) calc(var(--safe-right) + 20px) calc(var(--safe-bottom) + 20px) calc(var(--safe-left) + 20px);
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         main {
@@ -110,6 +110,25 @@
             align-items: center;
             width: 100%;
             margin: auto;
+        }
+
+        .hero, .theme-toggle, .url-form, .url-input, .custom-button, .credit, .paste-button, .source-url-display {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, transform 0.2s ease, background 0.4s ease;
+        }
+
+        .source-url-display {
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+            word-break: break-all;
+            margin-bottom: 0;
+            padding: 12px 20px;
+            background: var(--glass-bg);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            box-sizing: border-box;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
         }
 
         .hero {
@@ -229,7 +248,6 @@
             padding: 0 20px;
             border-radius: 100px;
             cursor: pointer;
-            transition: background 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -250,7 +268,6 @@
             border-radius: 18px;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.2s ease;
             cursor: pointer;
             border: 1px solid var(--glass-border);
             background: var(--glass-bg);
@@ -478,6 +495,9 @@
             if (tagline) tagline.style.display = 'none';
 
             const frag = document.createDocumentFragment();
+
+            const urlDisplay = createEl('div', { class: 'source-url-display' }, s);
+            frag.appendChild(urlDisplay);
 
             function hrefWithR(choice) {
                 const loc = window.location;
