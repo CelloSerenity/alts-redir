@@ -86,8 +86,10 @@
             transform: scale(0.95);
         }
 
-        html, body { height: 100%; margin: 0; padding: 0; }
+        html { height: 100%; margin: 0; padding: 0; }
         html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        
+        body { margin: 0; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -97,10 +99,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: calc(var(--safe-top) + 20px) calc(var(--safe-right) + 20px) calc(var(--safe-bottom) + 20px) calc(var(--safe-left) + 20px);
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: auto;
         }
 
         .hero {
@@ -316,6 +325,7 @@
 <body>
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme"></button>
 
+    <main>
     <div class="hero">
         <svg width="100" height="100" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon">
             <path d="M167.822 256H88.1778V233.636H167.822V256ZM22.6694 187.754C23.8473 201.628 28.4122 212.443 36.1111 220.024C43.5857 227.499 54.5064 232.132 68.2667 233.325V255.778C47.4259 254.514 30.9298 247.762 19.5833 236.415C8.01834 224.973 1.46739 208.519 0.222222 187.754H22.6694ZM255.883 187.754C254.615 208.519 247.954 224.973 236.389 236.415C225.165 247.639 208.678 254.492 187.733 255.775V233.32C201.592 232.103 212.521 227.385 220 220.024C227.699 212.443 232.264 201.628 233.442 187.754H255.883ZM128 49.072C132.868 49.072 137.662 50.2665 141.961 52.5501C146.261 54.8341 149.935 58.1392 152.661 62.1734C153.236 63.0693 153.825 63.9557 154.419 64.8376L109.311 110.04C104.286 115.07 101.221 121.732 101.3 129.033C101.379 136.282 104.539 142.782 109.381 147.652L109.483 147.755L109.589 147.858C114.453 152.552 120.884 155.556 127.989 155.625C135.155 155.695 141.774 152.762 146.856 147.822L146.928 147.752L146.997 147.683L191.911 102.775C193.247 103.699 194.598 104.604 195.967 105.484C200 108.21 203.305 111.885 205.589 116.185C207.872 120.485 209.067 125.279 209.067 130.147C209.067 135.016 207.872 139.81 205.589 144.11C203.305 148.41 200 152.085 195.967 154.811C178.59 165.971 163.82 180.743 152.661 198.121C149.935 202.156 146.261 205.461 141.961 207.745C137.662 210.028 132.868 211.223 128 211.223C123.132 211.223 118.338 210.028 114.039 207.745C109.739 205.461 106.065 202.156 103.339 198.121C92.1799 180.743 77.4098 165.971 60.0333 154.811C55.9996 152.085 52.6948 148.41 50.4111 144.11C48.1277 139.81 46.9333 135.016 46.9333 130.147C46.9333 125.279 48.1277 120.485 50.4111 116.185C52.6948 111.885 55.9996 108.21 60.0333 105.484C77.4098 94.3235 92.1799 79.5517 103.339 62.1734C106.065 58.1392 109.739 54.8341 114.039 52.5501C118.338 50.2665 123.132 49.072 128 49.072ZM22.3611 167.84H0V88.1873H22.3611V167.84ZM241.778 0C250.058 1.39468e-05 256 6.38511 256 14.2238V136.74C256 144.284 251.282 149.35 244.622 149.35C237.668 149.35 233.245 143.254 233.244 136.74V102.411L234.222 38.1903L213.522 60.351L136.942 136.912C131.637 142.07 124.565 141.833 119.467 136.912C114.311 131.726 114.133 124.623 119.378 119.377L195.961 42.6407L217.772 22.4469L150.756 22.758H119.467C112.954 22.758 106.667 18.0095 106.667 11.379C106.667 4.60073 111.629 0 119.467 0H241.778ZM68.2667 22.6802C54.4758 23.8993 43.4685 28.6181 36.1111 35.9761C28.407 43.5626 23.8407 54.3863 22.6667 68.2741H0.225C1.48786 47.4952 8.13756 31.0326 19.5833 19.5855C30.8059 8.36165 47.4024 1.50656 68.2667 0.222246V22.6802Z" fill="url(#paint0_linear_120_31)"/>
@@ -337,11 +347,11 @@
     <div class="credit">
         Made with ❤️ by <a href="https://github.com/CelloSerenity" target="_blank" rel="noopener">CelloSerenity</a>. <a href="https://github.com/CelloSerenity/altdirect" target="_blank" rel="noopener">Source</a>
     </div>
+    </main>
 
     <script>
         'use strict';
         
-        // Theme Toggle Logic
         const toggleBtn = document.getElementById('theme-toggle');
         const root = document.documentElement;
         
@@ -352,13 +362,11 @@
 
         function updateIcon() {
             const light = isLight();
-            // Moon for Light mode (to switch to Dark), Sun for Dark mode (to switch to Light)
             toggleBtn.innerHTML = light 
                 ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
                 : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
         }
 
-        // Initialize Theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             root.setAttribute('data-theme', savedTheme);
@@ -373,7 +381,6 @@
             updateIcon();
         });
 
-        // Listen for system changes if no manual override
         window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
             if (!localStorage.getItem('theme')) {
                 updateIcon();
