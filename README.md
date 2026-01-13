@@ -1,3 +1,5 @@
+# Repo has been moved to [here.](https://github.com/stikstore/altdirect)
+
 # <img src="/assets/png/Logo_Blue.png?raw=true" alt="AltDirect" height="25"> AltDirect
 
 [![pages-build-deployment](https://github.com/CelloSerenity/altdirect/actions/workflows/pages/pages-build-deployment/badge.svg?branch=main)](https://github.com/CelloSerenity/altdirect/actions/workflows/pages/pages-build-deployment)
