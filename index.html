@@ -443,7 +443,7 @@
                     return;
                 }
                 const excludePart = excludeParam ? '&exclude=' + excludeParam : '';
-                window.location.href = window.location.pathname + '?url=' + encodeURIComponent(rawVal) + excludePart;
+                window.location.href = window.location.pathname + '?url=' + rawVal + excludePart;
             });
 
             return wrapper;
@@ -517,7 +517,7 @@
         if (!rawParam && !rParam) {
             setContainer(buildForm());
         } else if (rawParam) {
-            let s = decodeURIComponent(rawParam).replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
+            let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
             if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
             const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
             setContainer(buildLinks(s, excludeList));
