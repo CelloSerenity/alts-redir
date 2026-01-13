@@ -124,10 +124,11 @@ Using the hosted page at https://celloserenity.github.io/altdirect:
 ## Acknowledgments
 
 - [AltStore](https://altstore.io), [SideStore](https://sidestore.io), StikStore, [LiveContainer](https://livecontainer.github.io/), and [Feather](https://github.com/khcrysalis/Feather) are trademarks of their respective owners. This project is (as of yet) unaffiliated and simply provides convenience links.
-- [Transistor](https://github.com/transistor-exe) for the logo and link assets
-- [Meshal](https://github.com/Meshal-GIT) for the catchy name
-- [Intradeus](https://github.com/intradeus), whose [redirector](https://github.com/intradeus/http-protocol-redirector) the project is based on
-- [Riley Testut](https://github.com/rileytestut) for the AltStore diamond and invention of AltSources
+- [Stephen](https://github.com/StephenDev0) for new UI.
+- [Transistor](https://github.com/transistor-exe) for the logo and link assets.
+- [Intradeus](https://github.com/intradeus), whose [redirector](https://github.com/intradeus/http-protocol-redirector) the project is based on.
+- [Riley Testut](https://github.com/rileytestut) for the AltStore diamond and invention of AltSources.
+- [Meshal](https://github.com/Meshal-GIT) for the catchy name.
 
 ---
 
