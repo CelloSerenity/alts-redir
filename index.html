@@ -547,6 +547,20 @@
             let s = rawParam.replace(/^(?:%20|\s)+|(?:%20|\s)+$/g, '');
             if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
             const excludeList = (excludeParam || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
+
+            try {
+                if (window.history && history.replaceState) {
+                    const parts = [];
+                    parts.push('url=' + s);
+                    if (rParam) parts.push('r=' + rParam);
+                    if (excludeParam) parts.push('exclude=' + excludeParam);
+                    const newUrl = window.location.pathname + (parts.length ? '?' + parts.join('&') : '');
+                    history.replaceState(null, '', newUrl);
+                }
+            } catch (e) {
+                // ignore
+            }
+
             setContainer(buildLinks(s, excludeList));
         }
     </script>
