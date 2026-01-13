@@ -15,12 +15,14 @@ Live page: https://celloserenity.github.io/altdirect/
 - Generates “Open in …” buttons for:
   - SideStore
   - AltStore Classic
+  - StikStore
+  - LiveContainer (currently, only nightly)
   - Feather
-  - LiveContainer (nightly only currently)
+
 - Supports one‑tap deep linking via the `r` (redirect target) parameter together with the `url` parameter.
 - Provides convenient actions:
   - Copy Source URL
-  - View Source Data (opens the feed URL in a new tab)
+  - View Source Data (opens the source URL in a new tab)
 - Mobile‑friendly UI.
 
 > [!CAUTION]
@@ -37,6 +39,7 @@ Live page: https://celloserenity.github.io/altdirect/
 Files:
 - `index.html` — UI, query‑param handling, and link generation.
 - `redirect.js` — minimal redirect helper that reads `r` and `url`, maps `r` to an app scheme, and performs `window.location.replace(...)`.
+- `assets` folder — contains pngs and svgs for logo, as well as Add AltSource and Download .ipa buttons.
 
 ---
 
@@ -119,7 +122,7 @@ Using the hosted page at https://celloserenity.github.io/altdirect:
 
 ## Acknowledgments
 
-- AltStore, SideStore, StikStore, LiveContainer, and Feather are trademarks of their respective owners. This project is (as of yet) unaffiliated and simply provides convenience links.
+- [AltStore](https://altstore.io), [SideStore](https://sidestore.io), StikStore, [LiveContainer](https://livecontainer.github.io/), and [Feather](https://github.com/khcrysalis/Feather) are trademarks of their respective owners. This project is (as of yet) unaffiliated and simply provides convenience links.
 - [Transistor](https://github.com/transistor-exe) for the logo and link assets
 - [Meshal](https://github.com/Meshal-GIT) for the catchy name
 - [Intradeus](https://github.com/intradeus), whose [redirector](https://github.com/intradeus/http-protocol-redirector) the project is based on
