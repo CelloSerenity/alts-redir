@@ -49,18 +49,18 @@ Files:
 Create your link using the query parameters below. These parameters are stable and will not be changed in a way that requires updates to your links.
 
 #### Query Parameters
-- `url` (string, optional)
+- `?url` (string, optional)
   - The source/feed URL (http/https). Leading/trailing spaces are trimmed (including `%20`) and, if the scheme is omitted, `https://` is automatically prefixed.
   - Example values:
-    - `?url=https://apps.altstore.io/`
-    - `?url=apps.altstore.io` (becomes `?url=https://apps.altstore.io`)
-- `exclude` (string, optional)
+    - `https://apps.altstore.io/`
+    - `apps.altstore.io` (becomes `https://apps.altstore.io`)
+- `&exclude` (string, optional)
   - Comma‑separated list of buttons to hide. Valid keys:
     - `sidestore`, `altstore`, `stikstore`, `livecontainer`, `feather`
   - Example: `&exclude=altstore,feather`
-- `r` (string, optional)
+- `&r` (string, optional)
   - Valid keys matches `exclude`. Only one entry.
-  - Example: `exclude=altstore,feather`
+  - Example: `r=sidestore`
   - Must be used with `url` present. When present, the page immediately redirects using these mappings:
     - `sidestore` → `sidestore://source?url=<url>`
     - `altstore` → `altstore-classic://source?url=<url>`
